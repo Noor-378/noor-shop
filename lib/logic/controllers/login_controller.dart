@@ -167,4 +167,3 @@ class LoginController extends GetxController {
     return auth.signInWithCredential(facebookAuthCredential);
   }
 }
-//
