@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:noor_store/logic/bindings/main_binding.dart';
 import 'package:noor_store/view/screens/auth/forget_password_screen.dart';
 import 'package:noor_store/view/screens/auth/login_screen.dart';
 import 'package:noor_store/view/screens/auth/signup_screen.dart';
@@ -17,7 +18,7 @@ class AppRoutes {
     GetPage(
       name: Routes.loginScreen, //
       page: () => LoginScreen(),
-      // binding: LoginBinding(),
+      bindings: [MainBinding()],
     ),
     GetPage(
       name: Routes.singupScreen, //
@@ -25,11 +26,12 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.forgetPasswordScreen, //
-      page: () =>  ForgetPasswordScreen(),
+      page: () => ForgetPasswordScreen(),
     ),
     GetPage(
       name: Routes.mainScreen, //
-      page: () => const MainScreen(),
+      page: () =>  MainScreen(),
+      bindings: [MainBinding()],
     ),
   ];
 }
