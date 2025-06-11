@@ -150,20 +150,34 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<UserCredential> signInWithFacebook() async {
+  Future signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
-    final data = await FacebookAuth.instance.getUserData();
-    facebookModel = FacebookModel.fromJson(data);
-    print(facebookModel!.name);
-    auth.currentUser!.updateDisplayName(facebookModel!.name);
-    auth.currentUser!.updatePhotoURL(facebookModel!.picture!.url);
+    if (loginResult.status == LoginStatus.success) {
+      final data = await FacebookAuth.instance.getUserData();
+      facebookModel = FacebookModel.fromJson(data);
+      auth.currentUser!.updateDisplayName(facebookModel!.name);
+      auth.currentUser!.updatePhotoURL(facebookModel!.picture!.url);
+      displayUserName = facebookModel!.name!;
+      displayUserImage = facebookModel!.picture!.url!;
 
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
-    // Once signed in, return the UserCredential
-    return auth.signInWithCredential(facebookAuthCredential);
+      // Once signed in, return the UserCredential
+      auth.signInWithCredential(facebookAuthCredential);
+      customGetSnackbar(
+        title: "Welcome Back!",
+        messageText: "Glad to see you again, $displayUserName!",
+      );
+      Get.offAllNamed(Routes.mainScreen);
+    } 
+    else {
+      customGetSnackbar(
+        title: "Somthing went wrong",
+        messageText: "Please try again",
+      );
+    }
   }
 }

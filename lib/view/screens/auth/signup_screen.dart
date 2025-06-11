@@ -153,7 +153,8 @@ class SignupScreen extends StatelessWidget {
                                             controller.signupUsingFirebase();
                                           }
                                         },
-                                        suffixIcon: controller.obscureEye
+                                        suffixIcon:
+                                            controller.obscureEye
                                                 ? FadeIn(
                                                   child: IconButton(
                                                     onPressed: () {
@@ -278,7 +279,7 @@ class SignupScreen extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 20),
-                                    SocialAuth(controller: controller,),
+                                    SocialAuth(controller: controller),
                                   ],
                                 ),
                               ),
@@ -352,7 +353,7 @@ class BottomSingupContainer extends StatelessWidget {
 
 class SocialAuth extends StatelessWidget {
   const SocialAuth({super.key, required this.controller});
-  final SingupController  controller;
+  final SingupController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -360,47 +361,50 @@ class SocialAuth extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomSocialAuthButton(
                 image: "assets/images/google_logo.png",
                 onPressed: () async {
-                 await  controller.signInWithGoogle();
+                  await controller.signInWithGoogle();
                 },
               ),
+              const SizedBox(width: 20),
               CustomSocialAuthButton(
                 image: "assets/images/facebook_logo.png",
-                onPressed: () {},
+                onPressed: () {
+                  controller.signInWithFacebook();
+                },
               ),
-              CustomSocialAuthButton(
-                height: 30,
-                image: "assets/images/twitter_logo.png",
-                onPressed: () {},
-              ),
+              // CustomSocialAuthButton(
+              //   height: 30,
+              //   image: "assets/images/twitter_logo.png",
+              //   onPressed: () {},
+              // ),
             ],
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomSocialAuthButton(
-                height: 70,
-                width: 70,
-                image: "assets/images/googleplaygames_logo.png",
-                onPressed: () {},
-              ),
-              CustomSocialAuthButton(
-                height: 35,
-                width: 35,
-                image: "assets/images/github_logo.png",
-                onPressed: () {},
-              ),
-              CustomSocialAuthButton(
-                image: "assets/images/microsoft_logo.png",
-                onPressed: () {},
-              ),
-            ],
-          ),
+          // const SizedBox(height: 20),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     CustomSocialAuthButton(
+          //       height: 70,
+          //       width: 70,
+          //       image: "assets/images/googleplaygames_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //     CustomSocialAuthButton(
+          //       height: 35,
+          //       width: 35,
+          //       image: "assets/images/github_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //     CustomSocialAuthButton(
+          //       image: "assets/images/microsoft_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

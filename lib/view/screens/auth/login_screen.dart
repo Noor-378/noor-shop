@@ -357,7 +357,7 @@ class SocialAuth extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomSocialAuthButton(
                 image: "assets/images/google_logo.png",
@@ -365,41 +365,43 @@ class SocialAuth extends StatelessWidget {
                   controller.signInWithGoogle();
                 },
               ),
+              const SizedBox(width: 20),
               CustomSocialAuthButton(
                 image: "assets/images/facebook_logo.png",
                 onPressed: () {
                   controller.signInWithFacebook();
                 },
               ),
-              CustomSocialAuthButton(
-                height: 30,
-                image: "assets/images/twitter_logo.png",
-                onPressed: () {},
-              ),
+              // CustomSocialAuthButton(
+              //   height: 30,
+              //   image: "assets/images/twitter_logo.png",
+              //   onPressed: () {
+              //   },
+              // ),
             ],
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomSocialAuthButton(
-                height: 70,
-                width: 70,
-                image: "assets/images/googleplaygames_logo.png",
-                onPressed: () {},
-              ),
-              CustomSocialAuthButton(
-                height: 35,
-                width: 35,
-                image: "assets/images/github_logo.png",
-                onPressed: () {},
-              ),
-              CustomSocialAuthButton(
-                image: "assets/images/microsoft_logo.png",
-                onPressed: () {},
-              ),
-            ],
-          ),
+          // const SizedBox(height: 20),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     CustomSocialAuthButton(
+          //       height: 70,
+          //       width: 70,
+          //       image: "assets/images/googleplaygames_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //     CustomSocialAuthButton(
+          //       height: 35,
+          //       width: 35,
+          //       image: "assets/images/github_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //     CustomSocialAuthButton(
+          //       image: "assets/images/microsoft_logo.png",
+          //       onPressed: () {},
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

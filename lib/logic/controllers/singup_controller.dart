@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:noor_store/model/facebook_model.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
 
@@ -16,6 +18,7 @@ class SingupController extends GetxController {
   bool obscureEye = false;
   String displayUserName = "";
   String displayUserImage = "";
+  FacebookModel? facebookModel;
   FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -144,6 +147,38 @@ class SingupController extends GetxController {
       customGetSnackbar(
         title: "Somthing went wrong",
         messageText: e.toString(),
+      );
+    }
+  }
+
+  
+  Future signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+    if (loginResult.status == LoginStatus.success) {
+      final data = await FacebookAuth.instance.getUserData();
+      facebookModel = FacebookModel.fromJson(data);
+      auth.currentUser!.updateDisplayName(facebookModel!.name);
+      auth.currentUser!.updatePhotoURL(facebookModel!.picture!.url);
+      displayUserName = facebookModel!.name!;
+      displayUserImage = facebookModel!.picture!.url!;
+
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+      // Once signed in, return the UserCredential
+      auth.signInWithCredential(facebookAuthCredential);
+      customGetSnackbar(
+        title: "Welcome!",
+        messageText: "Glad to see, $displayUserName!",
+      );
+      Get.offAllNamed(Routes.mainScreen);
+    } 
+    else {
+      customGetSnackbar(
+        title: "Somthing went wrong",
+        messageText: "Please try again",
       );
     }
   }
