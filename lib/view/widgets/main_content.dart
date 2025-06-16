@@ -1,4 +1,3 @@
-
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -19,19 +18,19 @@ class MainContent extends StatelessWidget {
   });
 
   final AdvancedDrawerController advancedDrawer;
-  final ScrollController scrollController;
   final MainController controller;
-
+  final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // body: controller.tabs[controller.currentIndex.value],
       body: DraggableHome(
-        bottomNavigationBar: Hidable(
-          controller: scrollController,
-          enableOpacityAnimation: false,
-          child: CustomNavBar(controller: controller),
+        scrollController: scrollController,
+        bottomNavigationBar: CustomNavBar(
+          scrollController: scrollController,
+          controller: controller,
         ),
+
         alwaysShowLeadingAndAction: true,
         alwaysShowTitle: true,
         appBarColor: scaffoldDarkColor,
@@ -41,14 +40,15 @@ class MainContent extends StatelessWidget {
         leading: LeadingIcon(advancedDrawer: advancedDrawer),
         headerWidget: const HeaderWidget(),
         body: [
-          IndexedStack(
-            index: controller.currentIndex.value,
-            children: controller.tabs,
+          Container(
+            color: Get.isDarkMode ? lightGrey : mainColor,
+            child: IndexedStack(
+              index: controller.currentIndex.value,
+              children: controller.tabs,
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-
