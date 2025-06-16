@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/utils/themes/dark_theme.dart';
+import 'package:noor_store/utils/themes/light_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData(
-        useMaterial3: false,
-        colorSchemeSeed:
-            Get.isDarkMode
-                ? LightAppColors.secondColor
-                : LightAppColors.mainColor,
-      ),
+      // theme: ThemeData(
+      //   useMaterial3: false,
+      //   colorSchemeSeed:
+      //       Get.isDarkMode
+      //           ? LightAppColors.secondColor
+      //           : LightAppColors.mainColor,
+      // ),
+      theme: LightTheme.light,
+      darkTheme: DarkTheme.dark,
       // home: const WelcomeScreen(),
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.routes,

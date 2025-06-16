@@ -72,7 +72,7 @@ class SignupScreen extends StatelessWidget {
                                       animatedTexts: [
                                         TyperAnimatedText(
                                           textStyle: TextStyle(
-                                            color: LightAppColors.textBodyColor,
+                                            color: textBodyColor,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -178,8 +178,8 @@ class SignupScreen extends StatelessWidget {
                                             glowSize: 8,
                                             stretchAlongAxis: true,
                                             gradientColors: [
-                                              LightAppColors.mainColor,
-                                              LightAppColors.secondColor,
+                                              mainColor,
+                                              secondColor,
                                             ],
                                             borderRadius: BorderRadius.circular(
                                               25,
@@ -191,8 +191,7 @@ class SignupScreen extends StatelessWidget {
                                                         ? Colors.grey.shade500
                                                         : Colors.white,
                                                 side: BorderSide(
-                                                  color:
-                                                      LightAppColors.mainColor,
+                                                  color: mainColor,
                                                 ),
                                                 shape:
                                                     ContinuousRectangleBorder(
@@ -215,10 +214,8 @@ class SignupScreen extends StatelessWidget {
                                                 fontSize: 16,
                                                 color:
                                                     Get.isDarkMode
-                                                        ? LightAppColors
-                                                            .secondColor
-                                                        : LightAppColors
-                                                            .mainColor,
+                                                        ? secondColor
+                                                        : mainColor,
                                               ),
                                             ),
                                           ),
@@ -255,11 +252,12 @@ class SignupScreen extends StatelessWidget {
                                               fontSize: 16,
                                               color:
                                                   Get.isDarkMode
-                                                      ? LightAppColors
-                                                          .secondColor
-                                                          .withAlpha(200)
-                                                      : LightAppColors.mainColor
-                                                          .withAlpha(200),
+                                                      ? secondColor.withAlpha(
+                                                        200,
+                                                      )
+                                                      : mainColor.withAlpha(
+                                                        200,
+                                                      ),
                                             ),
                                           ),
                                         ),
@@ -270,7 +268,7 @@ class SignupScreen extends StatelessWidget {
                                         const SizedBox(width: 5),
                                         CustomText(
                                           text: "Or login with",
-                                          color: LightAppColors.textBodyColor,
+                                          color: textBodyColor,
                                           fontSize: 16,
                                         ),
                                         const SizedBox(width: 5),
@@ -311,10 +309,7 @@ class BottomSingupContainer extends StatelessWidget {
             height: 50,
             width: Get.width,
             decoration: BoxDecoration(
-              color:
-                  Get.isDarkMode
-                      ? LightAppColors.secondColor
-                      : LightAppColors.mainColor,
+              color: Get.isDarkMode ? secondColor : mainColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

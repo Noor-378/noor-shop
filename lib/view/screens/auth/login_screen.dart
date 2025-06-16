@@ -79,8 +79,8 @@ class LoginScreen extends StatelessWidget {
                                             color:
                                                 Get.isDarkMode
                                                     ? Colors.white70
-                                                    : LightAppColors
-                                                        .textBodyColor,
+                                                    : 
+                                                        textBodyColor,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -183,8 +183,8 @@ class LoginScreen extends StatelessWidget {
                                             color:
                                                 Get.isDarkMode
                                                     ? Colors.white70
-                                                    : LightAppColors
-                                                        .textBodyColor,
+                                                    : 
+                                                        textBodyColor,
                                             fontSize: 16,
                                           ),
                                           const Spacer(),
@@ -192,8 +192,8 @@ class LoginScreen extends StatelessWidget {
                                             color:
                                                 Get.isDarkMode
                                                     ? Colors.white70
-                                                    : LightAppColors
-                                                        .textBodyColor,
+                                                    : 
+                                                        textBodyColor,
                                             decoration:
                                                 TextDecoration.underline,
                                             text: "Forget your password?",
@@ -213,8 +213,8 @@ class LoginScreen extends StatelessWidget {
                                             glowSize: 8,
                                             stretchAlongAxis: true,
                                             gradientColors: [
-                                              LightAppColors.mainColor,
-                                              LightAppColors.secondColor,
+                                              mainColor,
+                                              secondColor,
                                             ],
                                             borderRadius: BorderRadius.circular(
                                               25,
@@ -226,8 +226,7 @@ class LoginScreen extends StatelessWidget {
                                                         ? Colors.grey.shade500
                                                         : Colors.white,
                                                 side: BorderSide(
-                                                  color:
-                                                      LightAppColors.mainColor,
+                                                  color: mainColor,
                                                 ),
                                                 shape:
                                                     ContinuousRectangleBorder(
@@ -266,10 +265,8 @@ class LoginScreen extends StatelessWidget {
                                                 fontSize: 16,
                                                 color:
                                                     Get.isDarkMode
-                                                        ? LightAppColors
-                                                            .secondColor
-                                                        : LightAppColors
-                                                            .mainColor,
+                                                        ? secondColor
+                                                        : mainColor,
                                               ),
                                             ),
                                           ),
@@ -305,10 +302,11 @@ class LoginScreen extends StatelessWidget {
                                               fontSize: 16,
                                               color:
                                                   Get.isDarkMode
-                                                      ? LightAppColors
-                                                          .secondColor
-                                                      : LightAppColors.mainColor
-                                                          .withAlpha(200),
+                                                      ? 
+                                                          secondColor
+                                                      : mainColor.withAlpha(
+                                                        200,
+                                                      ),
                                             ),
                                           ),
                                         ),
@@ -319,7 +317,7 @@ class LoginScreen extends StatelessWidget {
                                         const SizedBox(width: 5),
                                         CustomText(
                                           text: "Or login with",
-                                          color: LightAppColors.textBodyColor,
+                                          color: textBodyColor,
                                           fontSize: 16,
                                         ),
                                         const SizedBox(width: 5),
@@ -421,10 +419,7 @@ class BottomLoginContainer extends StatelessWidget {
             height: 50,
             width: Get.width,
             decoration: BoxDecoration(
-              color:
-                  Get.isDarkMode
-                      ? LightAppColors.secondColor
-                      : LightAppColors.mainColor,
+              color: Get.isDarkMode ? secondColor : mainColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),

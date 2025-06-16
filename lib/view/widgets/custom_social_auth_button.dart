@@ -24,17 +24,17 @@ class CustomSocialAuthButton extends StatelessWidget {
         side: BorderSide(
           color:
               Get.isDarkMode
-                  ? LightAppColors.secondColor
+                  ? secondColor
                   : Colors.grey.shade300,
         ),
-        overlayColor: LightAppColors.mainColor,
+        overlayColor: mainColor,
         fixedSize: const Size(70, 40),
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         backgroundColor:
             Get.isDarkMode
-                ? LightAppColors.secondColor.withAlpha(100)
+                ? secondColor.withAlpha(100)
                 : Colors.white,
 
         elevation: 15,

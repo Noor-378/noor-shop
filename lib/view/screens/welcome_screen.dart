@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                                     BounceIn(
                                       child: CustomText(
                                         text: welcomeContent[index].title,
-                                        color: LightAppColors.mainColor,
+                                        color: mainColor,
                                         fontSize: 25,
                                         textAlign: TextAlign.center,
                                         fontWeight: FontWeight.w900,
@@ -68,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                                       animatedTexts: [
                                         TyperAnimatedText(
                                           textStyle: TextStyle(
-                                            color: LightAppColors.textBodyColor,
+                                            color: textBodyColor,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -130,7 +130,7 @@ class WelcomeScreen extends StatelessWidget {
                           SmoothPageIndicator(
                             effect: ExpandingDotsEffect(
                               dotHeight: 10,
-                              activeDotColor: LightAppColors.mainColor, //
+                              activeDotColor: mainColor, //
                             ),
                             controller: controller.pageController,
                             count: welcomeContent.length,
@@ -140,7 +140,7 @@ class WelcomeScreen extends StatelessWidget {
                                 animate: true,
                                 child: AnimatedGradientBorder(
                                   glowSize: 5,
-                                  gradientColors: [LightAppColors.mainColor, LightAppColors.secondColor],
+                                  gradientColors: [mainColor, secondColor],
                                   borderRadius: BorderRadius.circular(20),
                                   child: GestureDetector(
                                     onTap: () {
@@ -151,7 +151,10 @@ class WelcomeScreen extends StatelessWidget {
                                       width: 125,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color:
+                                            Get.isDarkMode
+                                                ? lightGrey
+                                                : whiteColor,
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: AnimatedCustomText(
@@ -173,7 +176,9 @@ class WelcomeScreen extends StatelessWidget {
                                   text: "Next",
                                   onPressed: () {
                                     controller.pageController.nextPage(
-                                      duration: const Duration(milliseconds: 750),
+                                      duration: const Duration(
+                                        milliseconds: 750,
+                                      ),
                                       curve: Curves.fastLinearToSlowEaseIn,
                                     );
                                   },

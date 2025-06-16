@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LightAppColors {
-  static Color mainColor = Colors.blue;
-  static Color textBodyColor = Colors.blueGrey;
-  static Color secondColor = Colors.purple;
-}
+Color mainColor = Colors.blue;
+Color textBodyColor = Colors.blueGrey;
+Color secondColor = Colors.purple;
+Color? scaffoldDarkColor = Colors.grey[850];
+Color blackColor = Colors.black;
+Color lightGrey = const Color(0xFF424242);
+Color whiteColor =  Colors.white;

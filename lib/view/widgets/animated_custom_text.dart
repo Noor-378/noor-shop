@@ -9,7 +9,7 @@ class AnimatedCustomText extends StatelessWidget {
     required this.text,
     this.fontSize = 25,
     this.fontWeight = FontWeight.bold,
-    this.onTap ,
+    this.onTap,
   });
   final String text;
   final double fontSize;
@@ -24,7 +24,7 @@ class AnimatedCustomText extends StatelessWidget {
       animatedTexts: [
         ColorizeAnimatedText(
           text,
-          colors: [LightAppColors.mainColor, LightAppColors.secondColor],
+          colors: [mainColor, secondColor],
           speed: const Duration(milliseconds: 500),
           textStyle: GoogleFonts.lato(
             textStyle: TextStyle(

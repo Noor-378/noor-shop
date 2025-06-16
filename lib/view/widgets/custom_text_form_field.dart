@@ -52,7 +52,7 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: fillColor,
         labelStyle: TextStyle(color: Get.isDarkMode ? Colors.white60 : null),
         floatingLabelStyle: TextStyle(
-          color: Get.isDarkMode ? LightAppColors.secondColor : null,
+          color: Get.isDarkMode ? secondColor : null,
         ),
         labelText: labelText,
         suffixIcon: suffixIcon,

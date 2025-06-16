@@ -172,8 +172,7 @@ class LoginController extends GetxController {
         messageText: "Glad to see you again, $displayUserName!",
       );
       Get.offAllNamed(Routes.mainScreen);
-    } 
-    else {
+    } else {
       customGetSnackbar(
         title: "Somthing went wrong",
         messageText: "Please try again",

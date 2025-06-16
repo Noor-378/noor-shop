@@ -16,11 +16,11 @@ class CustomCheckbox extends StatelessWidget {
     return Checkbox(
       activeColor:
           Get.isDarkMode
-              ? LightAppColors.secondColor
-              : LightAppColors.mainColor,
+              ? secondColor
+              : mainColor,
       onChanged: onChanged,
       value: value,
-      side: BorderSide(color: LightAppColors.textBodyColor, width: 1.5),
+      side: BorderSide(color: textBodyColor, width: 1.5),
     );
   }
 }

@@ -71,7 +71,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                       animatedTexts: [
                         TyperAnimatedText(
                           textStyle: TextStyle(
-                            color: LightAppColors.textBodyColor,
+                            color: textBodyColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -128,8 +128,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                             glowSize: 8,
                             stretchAlongAxis: true,
                             gradientColors: [
-                              LightAppColors.mainColor,
-                              LightAppColors.secondColor,
+                              mainColor,
+                              secondColor,
                             ],
                             borderRadius: BorderRadius.circular(25),
                             child: ElevatedButton(
@@ -139,7 +139,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                         ? Colors.grey.shade500
                                         : Colors.white,
                                 side: BorderSide(
-                                  color: LightAppColors.mainColor,
+                                  color: mainColor,
                                 ),
                                 shape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
@@ -156,8 +156,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 fontSize: 16,
                                 color:
                                     Get.isDarkMode
-                                        ? LightAppColors.secondColor
-                                        : LightAppColors.mainColor,
+                                        ? secondColor
+                                        : mainColor,
                               ),
                             ),
                           ),
@@ -192,8 +192,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 fontSize: 16,
                                 color:
                                     Get.isDarkMode
-                                        ? LightAppColors.secondColor
-                                        : LightAppColors.mainColor.withAlpha(
+                                        ? secondColor
+                                        : mainColor.withAlpha(
                                           200,
                                         ),
                               ),
