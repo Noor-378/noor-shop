@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glowy_borders/glowy_borders.dart';
 import 'package:lottie/lottie.dart';
-import 'package:noor_store/logic/controllers/login_controller.dart';
+import 'package:noor_store/logic/controllers/auth_controller.dart'; // Use unified controller
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/utils/my_string.dart';
-import 'package:noor_store/view/widgets/animated_custom_text.dart';
 import 'package:noor_store/view/widgets/custom_checkbox.dart';
 import 'package:noor_store/view/widgets/custom_divider.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
@@ -20,11 +19,12 @@ import 'package:noor_store/view/widgets/custom_text_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
+
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(
-      init: LoginController(),
+    return GetBuilder<AuthController>(
       builder:
           (controller) => Scaffold(
             resizeToAvoidBottomInset: false,
@@ -47,11 +47,15 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             FadeInDown(
-                              child: const AnimatedCustomText(
-                                text: "Noor Shop",
+                              child: const Text(
+                                "Noor Shop",
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            // SizedBox(height: 50),
                             FadeIn(
                               child: Lottie.asset(
                                 "assets/animations/Noor_Shop_login.json",
@@ -64,150 +68,144 @@ class LoginScreen extends StatelessWidget {
                                 horizontal: 16,
                               ),
                               child: Form(
-                                autovalidateMode: AutovalidateMode.onUnfocus,
-
                                 key: formKey,
+                                autovalidateMode: AutovalidateMode.onUnfocus,
                                 child: Column(
                                   children: [
                                     AnimatedTextKit(
                                       repeatForever: false,
                                       totalRepeatCount: 1,
-                                      pause: const Duration(microseconds: 100),
                                       animatedTexts: [
                                         TyperAnimatedText(
+                                          "Log in to continue your journey and find the products you're looking for.",
                                           textStyle: TextStyle(
                                             color:
                                                 Get.isDarkMode
                                                     ? Colors.white70
-                                                    : 
-                                                        textBodyColor,
+                                                    : textBodyColor,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          "Log in to continue your journey and find the products you're looking for.",
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: 20),
-                                    FadeInLeft(
-                                      child: CustomTextFormField(
-                                        hintText: "Enter your email",
-                                        controller: controller.emailController,
-                                        labelText: "Email",
-                                        prefixIcon: const Icon(
-                                          Icons.email_outlined,
-                                        ),
-                                        validator: (value) {
-                                          if (!RegExp(
-                                            validationEmail,
-                                          ).hasMatch(value!)) {
-                                            return "Enter valid email please";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
+                                    CustomTextFormField(
+                                      controller:
+                                          controller.loginEmailController,
+                                      labelText: "Email",
+                                      hintText: "Enter your email",
+                                      prefixIcon: const Icon(
+                                        Icons.email_outlined,
                                       ),
+                                      validator: (value) {
+                                        if (!RegExp(
+                                          validationEmail,
+                                        ).hasMatch(value ?? "")) {
+                                          return "Enter valid email please";
+                                        }
+                                        return null;
+                                      },
+                                      textInputAction: TextInputAction.next,
                                     ),
                                     const SizedBox(height: 20),
-                                    FadeInLeft(
-                                      from: 200,
-                                      child: CustomTextFormField(
-                                        hintText: "Enter your password",
-                                        controller:
-                                            controller.passwordController,
-                                        textInputAction: TextInputAction.done,
-                                        onFieldSubmitted: (value) async {
-                                          await FirebaseAuth
-                                              .instance
-                                              .currentUser!
-                                              .reload();
-
-                                          if (formKey.currentState!
-                                              .validate()) {
-                                            if (FirebaseAuth
-                                                .instance
-                                                .currentUser!
-                                                .emailVerified) {
-                                              controller.loginUsingFirebase();
-                                            } else {
-                                              customGetSnackbar(
-                                                title: "Verification",
-                                                messageText:
-                                                    "Please check your inbox to Verify your email.",
-                                              );
-                                            }
-                                          }
-                                        },
-                                        fillColor: Colors.blueGrey,
-                                        labelText: "Password",
-                                        prefixIcon: const Icon(
-                                          Icons.lock_outline,
-                                        ),
-                                        validator: (value) {
-                                          if (value.toString().length <= 6) {
-                                            return "Password should be longer than 6 characters";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        suffixIcon:
-                                            controller.obscureEye
-                                                ? FadeIn(
-                                                  child: IconButton(
-                                                    onPressed: () {
-                                                      controller
-                                                          .toggleObscureText();
-                                                    },
-                                                    icon: Icon(
-                                                      controller.obscureText
-                                                          ? Icons.visibility_off
-                                                          : Icons.visibility,
-                                                    ),
+                                    CustomTextFormField(
+                                      controller:
+                                          controller.loginPasswordController,
+                                      labelText: "Password",
+                                      hintText: "Enter your password",
+                                      prefixIcon: const Icon(
+                                        Icons.lock_outline,
+                                      ),
+                                      obscureText: controller.obscureText,
+                                      suffixIcon:
+                                          controller.obscureEye
+                                              ? FadeIn(
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    controller.obscureText
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
                                                   ),
-                                                )
-                                                : const SizedBox(height: 1),
-                                        obscureText: controller.obscureText,
-                                      ),
+                                                  onPressed:
+                                                      controller
+                                                          .toggleObscureText,
+                                                ),
+                                              )
+                                              : FadeOut(
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    controller.obscureText
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                  ),
+                                                  onPressed:
+                                                      controller
+                                                          .toggleObscureText,
+                                                ),
+                                              ),
+                                      validator: (value) {
+                                        if ((value ?? "").length <= 6) {
+                                          return "Password should be longer than 6 characters";
+                                        }
+                                        return null;
+                                      },
+                                      textInputAction: TextInputAction.done,
+                                      onFieldSubmitted: (value) async {
+                                        if (formKey.currentState!.validate()) {
+                                          final user =
+                                              FirebaseAuth.instance.currentUser;
+                                          await user?.reload();
+
+                                          if (user != null &&
+                                              user.emailVerified) {
+                                            controller.loginUsingFirebase();
+                                          } else {
+                                            customGetSnackbar(
+                                              title: "Verification",
+                                              messageText:
+                                                  "Please check your inbox to verify your email.",
+                                            );
+                                          }
+                                        }
+                                      },
                                     ),
-                                    FadeIn(
-                                      child: Row(
-                                        children: [
-                                          CustomCheckbox(
-                                            onChanged: (value) {
-                                              controller.toggleKeepMeLogin();
-                                            },
-                                            value: controller.keepMeLogin,
-                                          ),
-                                          CustomText(
-                                            text: "Keep me login",
-                                            color:
-                                                Get.isDarkMode
-                                                    ? Colors.white70
-                                                    : 
-                                                        textBodyColor,
-                                            fontSize: 16,
-                                          ),
-                                          const Spacer(),
-                                          CustomTextButton(
-                                            color:
-                                                Get.isDarkMode
-                                                    ? Colors.white70
-                                                    : 
-                                                        textBodyColor,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            text: "Forget your password?",
-                                            onPressed: () {
-                                              Get.toNamed(
-                                                Routes.forgetPasswordScreen,
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        CustomCheckbox(
+                                          value: controller.keepMeLogin,
+                                          onChanged:
+                                              (val) =>
+                                                  controller
+                                                      .toggleKeepMeLogin(),
+                                        ),
+                                        CustomText(
+                                          text: "Keep me login",
+                                          color:
+                                              Get.isDarkMode
+                                                  ? Colors.white70
+                                                  : textBodyColor,
+                                          fontSize: 16,
+                                        ),
+                                        const Spacer(),
+                                        CustomTextButton(
+                                          text: "Forget your password?",
+                                          color:
+                                              Get.isDarkMode
+                                                  ? Colors.white70
+                                                  : textBodyColor,
+                                          decoration: TextDecoration.underline,
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              Routes.forgetPasswordScreen,
+                                            );
+                                          },
+                                        ),
+                                      ],
                                     ),
                                     const SizedBox(height: 20),
-                                    controller.mainButton
+                                    controller.loginMainButton
                                         ? BounceIn(
                                           child: AnimatedGradientBorder(
                                             glowSize: 8,
@@ -240,22 +238,23 @@ class LoginScreen extends StatelessWidget {
                                               onPressed: () async {
                                                 await FirebaseAuth
                                                     .instance
-                                                    .currentUser!
-                                                    .reload();
-
-                                                if (formKey.currentState!
-                                                    .validate()) {
+                                                    .currentUser
+                                                    ?.reload();
+                                                if (formKey.currentState
+                                                        ?.validate() ??
+                                                    false) {
                                                   if (FirebaseAuth
-                                                      .instance
-                                                      .currentUser!
-                                                      .emailVerified) {
+                                                          .instance
+                                                          .currentUser
+                                                          ?.emailVerified ??
+                                                      false) {
                                                     controller
                                                         .loginUsingFirebase();
                                                   } else {
                                                     customGetSnackbar(
                                                       title: "Verification",
                                                       messageText:
-                                                          "Please check your inbox to Verify your email.",
+                                                          "Please check your inbox to verify your email.",
                                                     );
                                                   }
                                                 }
@@ -272,10 +271,9 @@ class LoginScreen extends StatelessWidget {
                                           ),
                                         )
                                         : Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 20,
-                                            right: 20,
-                                            left: 20,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
+                                            vertical: 20,
                                           ),
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
@@ -302,8 +300,7 @@ class LoginScreen extends StatelessWidget {
                                               fontSize: 16,
                                               color:
                                                   Get.isDarkMode
-                                                      ? 
-                                                          secondColor
+                                                      ? secondColor
                                                       : mainColor.withAlpha(
                                                         200,
                                                       ),
@@ -321,7 +318,6 @@ class LoginScreen extends StatelessWidget {
                                           fontSize: 16,
                                         ),
                                         const SizedBox(width: 5),
-
                                         const CustomDivider(width: 112.5),
                                       ],
                                     ),
@@ -347,59 +343,27 @@ class LoginScreen extends StatelessWidget {
 
 class SocialAuth extends StatelessWidget {
   const SocialAuth({super.key, required this.controller});
-  final LoginController controller;
+  final AuthController controller;
 
   @override
   Widget build(BuildContext context) {
     return Bounce(
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomSocialAuthButton(
-                image: "assets/images/google_logo.png",
-                onPressed: () {
-                  controller.signInWithGoogle();
-                },
-              ),
-              const SizedBox(width: 20),
-              CustomSocialAuthButton(
-                image: "assets/images/facebook_logo.png",
-                onPressed: () {
-                  controller.signInWithFacebook();
-                },
-              ),
-              // CustomSocialAuthButton(
-              //   height: 30,
-              //   image: "assets/images/twitter_logo.png",
-              //   onPressed: () {
-              //   },
-              // ),
-            ],
+          CustomSocialAuthButton(
+            image: "assets/images/google_logo.png",
+            onPressed: () {
+              controller.signInWithGoogle();
+            },
           ),
-          // const SizedBox(height: 20),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     CustomSocialAuthButton(
-          //       height: 70,
-          //       width: 70,
-          //       image: "assets/images/googleplaygames_logo.png",
-          //       onPressed: () {},
-          //     ),
-          //     CustomSocialAuthButton(
-          //       height: 35,
-          //       width: 35,
-          //       image: "assets/images/github_logo.png",
-          //       onPressed: () {},
-          //     ),
-          //     CustomSocialAuthButton(
-          //       image: "assets/images/microsoft_logo.png",
-          //       onPressed: () {},
-          //     ),
-          //   ],
-          // ),
+          const SizedBox(width: 20),
+          CustomSocialAuthButton(
+            image: "assets/images/facebook_logo.png",
+            onPressed: () {
+              controller.signInWithFacebook();
+            },
+          ),
         ],
       ),
     );
@@ -431,9 +395,9 @@ class BottomLoginContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomText(
-                    text: "Dont have an account? ",
-                    fontSize: 16,
+                  const Text(
+                    "Don't have an account? ",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   GestureDetector(
                     onTap: () {

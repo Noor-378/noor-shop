@@ -9,236 +9,236 @@ class HomeScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           'Home Screen',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
             // Action for the button
           },
-          child: Text('Click Me'),
+          child: const Text('Click Me'),
         ),
       ],
     );
