@@ -22,28 +22,18 @@ class CustomNavBar extends StatelessWidget {
       enableOpacityAnimation: false,
       child: CurvedNavigationBar(
         index: controller.currentIndex.value,
-        color: lightGrey,
+        height: 65,
+        // color: lightGrey,
         animationDuration: const Duration(milliseconds: 500),
         backgroundColor: Get.isDarkMode ? secondColor : mainColor,
         items: [
-          Icon(
-            Icons.home_outlined,
-            size: 30,
-            color: Get.isDarkMode ? whiteColor : blackColor,
-          ),
-          Icon(
-            Icons.apps,
-            size: 30,
-            color: Get.isDarkMode ? whiteColor : blackColor,
-          ),
-          Icon(
-            Icons.favorite_border,
-            size: 30,
-            color: Get.isDarkMode ? whiteColor : blackColor,
-          ),
+          Image.asset("assets/images/home.png"),
+          Image.asset("assets/images/category.png"),
+          Image.asset("assets/images/heart.png"),
+          Image.asset("assets/images/cart.png"),
         ],
         onTap: (index) {
-          controller.change(index);
+          controller.changeIndex(index);
         },
       ),
     );

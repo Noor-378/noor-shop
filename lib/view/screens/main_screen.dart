@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
             animateChildDecoration: true,
             rtlOpening: false,
             disabledGestures: false,
-            backdropColor: Get.isDarkMode ? lightGrey : mainColor,
+            backdropColor: mainColor,
             childDecoration: const BoxDecoration(
               boxShadow: <BoxShadow>[
                 BoxShadow(color: Colors.black26, blurRadius: 10.0),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
+import 'package:noor_store/view/screens/cart_screen.dart';
 import 'package:noor_store/view/screens/category_screen.dart';
 import 'package:noor_store/view/screens/favorites_screen.dart';
 import 'package:noor_store/view/screens/home_screen.dart';
@@ -9,11 +10,26 @@ class MainController extends GetxController {
   RxInt currentIndex = 0.obs;
   ScrollController scrollController = ScrollController();
   AdvancedDrawerController advancedDrawer = AdvancedDrawerController();
-  final tabs = const [HomeScreen(), CategoryScreen(), FavoritesScreen()].obs;
-  void change(index) {
+
+  late RxList<Widget> tabs;
+  final titles = ["Noor Shop", "Categories", "Favorites", "Cart"].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    // ✅ initialize after scrollController is created
+    tabs =
+        const [
+          HomeScreen(),
+          CategoryScreen(),
+          FavoritesScreen(),
+          CartScreen(),
+        ].obs;
+  }
+
+  void changeIndex(index) {
     currentIndex.value = index;
     update();
   }
-
-  final titles = ["Noor Shop", "Categories", "Favorites"].obs;
 }

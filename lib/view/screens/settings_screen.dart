@@ -8,20 +8,19 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
+      // backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
       appBar: AppBar(),
       body: Column(
         children: [
           IconButton(
             onPressed: () {
-              Get.isDarkMode
-                  ? Get.changeThemeMode(ThemeMode.light)
-                  : Get.changeThemeMode(ThemeMode.dark);
+              // Toggle to the opposite mode
             },
             icon: Icon(
               Get.isDarkMode
-                  ? Icons.wb_sunny_outlined
-                  : Icons.dark_mode_outlined,
+                  ? Icons
+                      .wb_sunny_outlined // Show sun when in dark mode
+                  : Icons.dark_mode_outlined, // Show moon when in light mode
             ),
           ),
           ElevatedButton.icon(
@@ -32,6 +31,6 @@ class SettingsScreen extends StatelessWidget {
           ),
         ],
       ),
-    ); 
+    );
   }
 }

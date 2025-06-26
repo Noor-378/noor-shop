@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/logic/controllers/auth_controller.dart';
 import 'package:noor_store/routes/routes.dart';
-import 'package:noor_store/utils/themes/dark_theme.dart';
 import 'package:noor_store/utils/themes/light_theme.dart';
 
 Future<void> main() async {
@@ -11,6 +10,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   Get.put(AuthController());
+
   runApp(const MyApp());
 }
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       //           : LightAppColors.mainColor,
       // ),
       theme: LightTheme.light,
-      darkTheme: DarkTheme.dark,
+      // darkTheme: DarkTheme.dark,
       // home: const WelcomeScreen(),
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.routes,

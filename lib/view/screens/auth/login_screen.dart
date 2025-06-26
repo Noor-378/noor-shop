@@ -9,6 +9,7 @@ import 'package:noor_store/logic/controllers/auth_controller.dart'; // Use unifi
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/utils/my_string.dart';
+import 'package:noor_store/view/widgets/animated_custom_text.dart';
 import 'package:noor_store/view/widgets/custom_checkbox.dart';
 import 'package:noor_store/view/widgets/custom_divider.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
@@ -47,13 +48,11 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             FadeInDown(
-                              child: const Text(
-                                "Noor Shop",
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                              child: const AnimatedCustomText(
+                                text: "Noor Shop",
+
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             FadeIn(
@@ -401,7 +400,7 @@ class BottomLoginContainer extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.singupScreen);
+                      Get.offAllNamed(Routes.singupScreen);
                     },
                     child: const Text(
                       "Create an account",

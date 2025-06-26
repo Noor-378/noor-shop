@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -234,7 +233,7 @@ class AuthController extends GetxController {
         cancelTextColor: Colors.white,
         backgroundColor: Get.isDarkMode ? scaffoldDarkColor : whiteColor,
         buttonColor: Get.isDarkMode ? secondColor : mainColor,
-        contentPadding: EdgeInsets.all(25),
+        contentPadding: const EdgeInsets.all(25),
         onConfirm: () => Get.back(result: true),
       );
 
