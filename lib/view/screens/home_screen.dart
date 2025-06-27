@@ -4,7 +4,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
-import 'package:noor_store/view/widgets/custom_text_button.dart';
 import 'package:noor_store/view/widgets/item_card.dart';
 import 'dart:math';
 
@@ -28,14 +27,14 @@ class HomeScreen extends StatelessWidget {
               color: blackColor,
             ),
             const CustomGrid(),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             CustomFavoriteButton(
               onTap: (isLike) async {
                 return !isLike;
               },
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
           ],
         ),
       ),

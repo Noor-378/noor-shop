@@ -3,6 +3,7 @@ import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_add_to_cart_button.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
+import 'package:noor_store/view/widgets/custom_text.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key, required this.height});
@@ -50,6 +51,28 @@ class ItemCard extends StatelessWidget {
                         // You can add your logic here (API call, GetX update, etc.)
                         return !isLiked;
                       },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(19),
+                  child: Image.network(
+                    fit: BoxFit.cover,
+                    height: height - 100,
+                    "https://images.unsplash.com/photo-1654649451086-dd75d8170a27?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8Q0R3dXdYSkFiRXd8fGVufDB8fHx8fA%3D%3D",
+                  ),
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    CustomText(
+                      // ideia* to make it like gample :)
+                      // if the user press on the price, become lower
+                      text: "\$ 15",
+                      fontSize: 12,
+                      color: blackColor,
+                      fontWeight: FontWeight.w800,
                     ),
                   ],
                 ),
