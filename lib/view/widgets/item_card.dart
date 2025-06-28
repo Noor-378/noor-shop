@@ -6,8 +6,15 @@ import 'package:noor_store/view/widgets/custom_snackbar.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key, required this.height});
+  const ItemCard({
+    super.key,
+    required this.height,
+    required this.image,
+    required this.price,
+  });
   final double height;
+  final String image;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +24,7 @@ class ItemCard extends StatelessWidget {
         Container(
           height: height,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: whiteColor,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
@@ -58,9 +65,9 @@ class ItemCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(19),
                   child: Image.network(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                     height: height - 100,
-                    "https://images.unsplash.com/photo-1654649451086-dd75d8170a27?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8Q0R3dXdYSkFiRXd8fGVufDB8fHx8fA%3D%3D",
+                    image,
                   ),
                 ),
                 const Spacer(),
@@ -69,7 +76,7 @@ class ItemCard extends StatelessWidget {
                     CustomText(
                       // ideia* to make it like gample :)
                       // if the user press on the price, become lower
-                      text: "\$ 15",
+                      text: price,
                       fontSize: 12,
                       color: blackColor,
                       fontWeight: FontWeight.w800,
@@ -81,7 +88,7 @@ class ItemCard extends StatelessWidget {
           ),
         ),
         Container(
-          height: 50,
+          height: 40,
           width: 50,
           decoration: BoxDecoration(
             color: contentColor,

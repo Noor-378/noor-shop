@@ -20,11 +20,11 @@ class MainController extends GetxController {
 
     // ✅ initialize after scrollController is created
     tabs =
-        const [
+        [
           HomeScreen(),
-          CategoryScreen(),
-          FavoritesScreen(),
-          CartScreen(),
+          const CategoryScreen(),
+          const FavoritesScreen(),
+          const CartScreen(),
         ].obs;
   }
 
