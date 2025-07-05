@@ -14,6 +14,7 @@ import 'package:redacted/redacted.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final controller = Get.put(ProductController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -48,6 +49,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 50),
+                // MyHomePage(tabController: controller.tap!, itemsMode: controller.productModel)
               ],
             ),
           ),
@@ -70,7 +72,7 @@ class CustomGrid extends StatelessWidget {
       ),
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
-      itemCount: 10,
+      itemCount: controller.productModel.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
@@ -89,6 +91,8 @@ class CustomGrid extends StatelessWidget {
     );
   }
 }
+
+////////////////////////////////////////////////////////////////////////
 // GridView.builder(
 //       physics:
 //           const NeverScrollableScrollPhysics(), // 🧠 disables inner scrolling
@@ -125,6 +129,7 @@ class CustomGrid extends StatelessWidget {
 //       itemBuilder:
 //           (context, index) => ItemCard(height: index.isEven ? 100 : 150),
 //     );
+////////////////////////////////////////////////////////////////////////
 class ShoeWidget extends StatelessWidget {
   const ShoeWidget({super.key});
 
@@ -180,23 +185,34 @@ class ShoeWidget extends StatelessWidget {
                           // shape: BoxShape.circle,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                children: [Icon(Icons.card_travel)],
+                                children: [
+                                  CustomText(
+                                    text: "15 \$",
+                                    fontSize: 15,
+                                    color: blackColor,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 18),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(19),
-                                child: Image.network(
-                                  fit: BoxFit.cover,
-                                  height: 150,
-                                  "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
-                                ).redacted(context: context, redact: true),
-                              ),
-                              const Spacer(),
+                              // ClipRRect(
+                              //   borderRadius: BorderRadius.circular(19),
+                              //   child: Image.network(
+                              //     fit: BoxFit.cover,
+                              //     height: 150,
+                              //     "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
+                              //   ).redacted(context: context, redact: true),
+                              // ),
+                              Container(
+                                height: 140,
+                                color: Colors.blue,
+                              ).redacted(context: context, redact: true),
+                              const SizedBox(height: 10),
                               Row(
                                 children: [
                                   CustomText(
@@ -218,9 +234,20 @@ class ShoeWidget extends StatelessWidget {
                           color: contentColor,
                           borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(15),
+                            topLeft: Radius.circular(15),
                           ),
                         ),
-                        child: const Icon(Icons.favorite),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            CustomText(
+                              text: "15 \$",
+                              fontSize: 15,
+                              color: blackColor,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ).redacted(context: context, redact: true),
@@ -232,10 +259,95 @@ class ShoeWidget extends StatelessWidget {
   }
 }
 
+// ItemCard(
+//   height: 500,
+//   image:
+//       "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
+//   price: "5",
+// ),
 
-          // ItemCard(
-          //   height: 500,
-          //   image:
-          //       "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
-          //   price: "5",
-          // ),
+// class HorizontalProductCarousel extends StatelessWidget {
+//   final TabController tabController;
+//   final List<ProductModel> products;
+
+//   const HorizontalProductCarousel({
+//     super.key,
+//     required this.tabController,
+//     required this.products,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return LocalHeroViews(
+//       tabController: tabController,
+//       textDirection: TextDirection.ltr,
+//       itemCount: products.length,
+//       onPressedCard: (index) {
+//         // What happens when user taps card at position `index`
+//         print('Card $index pressed');
+//         // For example, navigate to detail screen:
+//         // Navigator.of(context).push(...);
+//       },
+//       itemsModel: (index) {
+//         final product = products[index];
+//         return ItemsModel(
+//           name: Text(
+//             product.title ?? "s",
+//             style: const TextStyle(fontWeight: FontWeight.bold),
+//           ),
+//           title: Text(
+//             product.price.toString() ?? "s",
+//             style: const TextStyle(color: Colors.green),
+//           ),
+//           subTitle: const SizedBox.shrink(), // add subtitle if you want
+//           favoriteIconButton: IconButton(
+//             icon: const Icon(Icons.favorite_border),
+//             onPressed: () {
+//               // your favorite logic here
+//             },
+//           ),
+//           subTitleIcon: const Icon(Icons.shopping_cart, size: 14),
+//           image: DecorationImage(
+//             image: NetworkImage(product.image!),
+//             fit: BoxFit.cover,
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+
+// class MyHomePage extends StatelessWidget {
+//   final TabController tabController;
+//   final List<ProductModel> itemsMode; // Your model
+
+//   MyHomePage({required this.tabController, required this.itemsMode});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return LocalHeroViews(
+//       tabController: tabController,
+//       textDirection: TextDirection.ltr,
+//       itemCount: itemsMode.length,
+//       itemsModel:
+//           (index) => ItemsModel(
+//             name: Text(itemsMode[index].rating.toString()),
+//             title: Text(itemsMode[index].title!),
+//             subTitle: Text(itemsMode[index].price.toString()),
+//             favoriteIconButton: IconButton(
+//               onPressed: () {},
+//               icon: Icon(Icons.add),
+//             ),
+//             subTitleIcon: const Icon(
+//               Icons.location_on_outlined,
+//               color: Color(0xFF95979A),
+//               size: 10,
+//             ),
+//             image: DecorationImage(
+//               image: NetworkImage(itemsMode[index].image!),
+//             ),
+//           ),
+//       onPressedCard: (int index) {},
+//     );
+//   }
+// }

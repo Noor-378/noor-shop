@@ -7,12 +7,13 @@ class ProductController extends GetxController {
   @override
   void onInit() {
     getProducts();
+  
     super.onInit();
   }
+
   var productModel = <ProductModel>[].obs;
   var isLeading = true.obs;
   void getProducts() async {
-    
     var product = await ProductServices.getProduct();
     // try{}finally{}  // enter the finally after finishing the try
     // try{}catch(e){} // enter the catch if the try have any error
