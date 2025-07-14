@@ -24,6 +24,7 @@ class AuthController extends GetxController {
   bool loginMainButton = false;
   bool singupMainButton = false;
   bool forgetPasswordMainButton = false;
+  bool isLoading = false;
 
   // Firebase
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -178,11 +179,16 @@ class AuthController extends GetxController {
     try {
       await googleSignIn.signOut();
       final googleUser = await googleSignIn.signIn();
+      isLoading = true;
+      update();
       if (googleUser == null) {
         customGetSnackbar(
           title: "Somthing went wrong",
           messageText: "Please pick an account",
         );
+        isLoading = false;
+        update();
+
         return;
       }
 
@@ -202,6 +208,8 @@ class AuthController extends GetxController {
         messageText: "Hello, $displayUserName!",
       );
     } catch (e) {
+      isLoading = false;
+      update();
       customGetSnackbar(
         title: "Google Sign-In Failed",
         messageText: e.toString(),
@@ -211,6 +219,8 @@ class AuthController extends GetxController {
 
   Future<void> signInWithFacebook() async {
     final loginResult = await FacebookAuth.instance.login();
+    isLoading = true;
+    update();
 
     if (loginResult.status == LoginStatus.success) {
       final data = await FacebookAuth.instance.getUserData();
@@ -244,17 +254,24 @@ class AuthController extends GetxController {
         await auth.currentUser!.updatePhotoURL(displayUserImage);
 
         Get.offAllNamed(Routes.mainScreen);
+       
         customGetSnackbar(
           title: "Welcome!",
           messageText: "Hello, $displayUserName!",
         );
+         isLoading = false;
+        update();
       } else {
+        isLoading = false;
+        update();
         customGetSnackbar(
           title: "Cancelled",
           messageText: "Login was cancelled.",
         );
       }
     } else {
+      isLoading = false;
+      update();
       customGetSnackbar(
         title: "Facebook Sign-In Failed",
         messageText: "Try again.",

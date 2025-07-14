@@ -3,6 +3,7 @@ import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_add_to_cart_button.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
+import 'package:noor_store/view/widgets/custom_star.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class ItemCard extends StatelessWidget {
@@ -11,10 +12,12 @@ class ItemCard extends StatelessWidget {
     required this.height,
     required this.image,
     required this.price,
+    this.rate,
   });
   final double height;
   final String image;
   final String price;
+  final double? rate;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,25 @@ class ItemCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Row(
+                      children: [
+                        SingleStarRating(
+                          rate: rate ?? 0,
+                          size: 30,
+                          max: 5,
+                        ), // fill is 50%
+                        const SizedBox(width: 8),
+                        CustomText(
+                          text: rate.toString(),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: blackColor,
+                        ),
+                      ],
+                    ),
+
                     CustomText(
                       // ideia* to make it like gample :)
                       // if the user press on the price, become lower

@@ -160,7 +160,7 @@ class DemoPage extends StatelessWidget {
 }
 
 class YoutubeWebView extends StatefulWidget {
-  const YoutubeWebView({Key? key}) : super(key: key);
+  const YoutubeWebView({super.key});
 
   @override
   State<YoutubeWebView> createState() => _YoutubeWebViewState();

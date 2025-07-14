@@ -86,6 +86,7 @@ class CustomGrid extends StatelessWidget {
             height: height.toDouble(),
             image: con.image!,
             price: "${con.price.toString()} \$",
+            rate: con.rating?.rate ?? 0,
           ),
         );
       },
