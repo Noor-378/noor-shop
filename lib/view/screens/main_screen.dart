@@ -40,7 +40,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
             ),
-            drawer: const DrawerContent(),
+            drawer: DrawerContent(advancedDrawer: controller.advancedDrawer),
             child: MainContent(
               advancedDrawer: controller.advancedDrawer,
               scrollController: controller.scrollController,

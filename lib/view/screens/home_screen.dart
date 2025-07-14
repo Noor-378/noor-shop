@@ -41,6 +41,7 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 CustomGrid(controller: controller),
+                CustomGrid(controller: controller),
                 const SizedBox(height: 50),
 
                 CustomFavoriteButton(

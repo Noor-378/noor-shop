@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/routes/routes.dart';
+import 'package:noor_store/utils/colors.dart';
 
 class DrawerContent extends StatelessWidget {
-  const DrawerContent({super.key});
+  const DrawerContent({super.key, required this.advancedDrawer});
+  final AdvancedDrawerController advancedDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -15,47 +17,56 @@ class DrawerContent extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 128.0,
-              height: 128.0,
-              margin: const EdgeInsets.only(top: 24.0, bottom: 64.0),
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                color: Colors.black26,
-                shape: BoxShape.circle,
-              ),
+              margin: const EdgeInsets.only(top: 24.0, bottom: 50),
               child: const CircleAvatar(
                 backgroundColor: Colors.blue,
-                radius: 30,
+                radius: 50,
               ),
             ),
             ListTile(
-              onTap: () {},
-              leading: const Icon(Icons.home),
+              onTap: () => advancedDrawer.hideDrawer(),
+
+              leading: Image.asset("assets/images/home.png", color: whiteColor),
               title: const Text('Home'),
             ),
             ListTile(
               onTap: () {},
-              leading: const Icon(Icons.account_circle_rounded),
+              leading: Image.asset(
+                "assets/images/profile.png",
+                color: whiteColor,
+              ),
               title: const Text('Profile'),
             ),
-            const ListTile(
-              onTap: null,
-              leading: Icon(Icons.favorite),
-              title: Text('Favourites'),
+            ListTile(
+              onTap: () {},
+              leading: Image.asset(
+                "assets/images/heart.png",
+                color: whiteColor,
+              ),
+              title: const Text('Favourites'),
             ),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.settingsScreen);
               },
-              leading: const Icon(Icons.settings),
+              leading: Image.asset(
+                "assets/images/settings.png",
+                color: whiteColor,
+              ),
               title: const Text('Settings'),
             ),
             const Spacer(),
-            const DefaultTextStyle(
-              style: TextStyle(fontSize: 12, color: Colors.white54),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Text('Terms of Service | Privacy Policy'),
+            ListTile(
+              onTap: () {
+                Get.toNamed(Routes.termsScreen);
+              },
+              leading: Image.asset("assets/images/info.png", color: whiteColor),
+              title: const DefaultTextStyle(
+                style: TextStyle(fontSize: 12, color: Colors.white54),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text('Terms of Service | Privacy Policy'),
+                ),
               ),
             ),
           ],

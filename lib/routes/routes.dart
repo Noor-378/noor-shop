@@ -6,6 +6,8 @@ import 'package:noor_store/view/screens/auth/forget_password_screen.dart';
 import 'package:noor_store/view/screens/auth/login_screen.dart';
 import 'package:noor_store/view/screens/auth/signup_screen.dart';
 import 'package:noor_store/view/screens/main_screen.dart';
+import 'package:noor_store/view/screens/settings_screen.dart';
+import 'package:noor_store/view/screens/terms_screen.dart';
 import 'package:noor_store/view/screens/welcome_screen.dart';
 
 class AppRoutes {
@@ -17,6 +19,8 @@ class AppRoutes {
 
   static final routes = [
     GetPage(name: Routes.welcomeScreen, page: () => const WelcomeScreen()),
+    GetPage(name: Routes.termsScreen, page: () => const TermsScreen()),
+    GetPage(name: Routes.settingsScreen, page: () => const SettingsScreen()),
     GetPage(
       name: Routes.loginScreen,
       page: () => LoginScreen(),
@@ -47,4 +51,5 @@ class Routes {
   static const String forgetPasswordScreen = "/forgetPasswordScreen";
   static const String mainScreen = "/mainScreen";
   static const String settingsScreen = "/settingsScreen";
+  static const String termsScreen = "/termsScreen";
 }
