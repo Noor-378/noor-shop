@@ -87,9 +87,9 @@ class ItemCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         CustomText(
                           text: rate.toString(),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: blackColor,
+                         fontSize: 12,
+                      color: blackColor,
+                      fontWeight: FontWeight.w800,
                         ),
                       ],
                     ),

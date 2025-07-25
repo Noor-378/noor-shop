@@ -50,6 +50,8 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0 # custom grid view
   
   # فواتير
+  # ideia* to make it like gample :)
+  # if the user press on the price, become lower 
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:

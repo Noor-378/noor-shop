@@ -1,13 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/services/product_services.dart';
 
-class ProductController extends GetxController {
+class ProductController extends GetxController
+    with GetTickerProviderStateMixin {
+  late TabController tabController;
+
   @override
   void onInit() {
     getProducts();
-  
+
+    tabController = TabController(length: 2, vsync: this);
+
     super.onInit();
   }
 
@@ -25,5 +31,11 @@ class ProductController extends GetxController {
     } finally {
       isLeading(false);
     }
+  }
+
+  var isGridView = true.obs;
+  toggleGrid() {
+    isGridView.value = !isGridView.value;
+    update();
   }
 }

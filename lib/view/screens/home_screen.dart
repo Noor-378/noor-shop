@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -7,6 +9,7 @@ import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:noor_store/view/widgets/item_card.dart';
+import 'package:noor_store/view/widgets/list_item_card.dart';
 import 'dart:math';
 
 import 'package:redacted/redacted.dart';
@@ -27,21 +30,71 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                CustomText(
-                  text: "Trending Now",
-                  fontSize: 18,
-                  color: blackColor,
-                ),
-                CustomText(
-                  text: "Top Products Everyone’s Loving",
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: blackColor,
+                // const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        CustomText(
+                          text: "Trending Now",
+                          fontSize: 18,
+                          color: blackColor,
+                        ),
+                        CustomText(
+                          text: "Top Products Everyone’s Loving",
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: blackColor,
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: Obx(() {
+                        return AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) {
+                            return ScaleTransition(
+                              scale: animation,
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                            );
+                          },
+                          child: Image.asset(
+                            controller.isGridView.value
+                                ? "assets/images/list.png"
+                                : "assets/images/grid.png",
+                            key: ValueKey(
+                              controller.isGridView.value ? 'grid' : 'list',
+                            ),
+                          ),
+                        );
+                      }),
+                      onPressed: () => controller.toggleGrid(),
+                    ),
+                  ],
                 ),
 
-                CustomGrid(controller: controller),
-                CustomGrid(controller: controller),
+                controller.isGridView.value
+                    ? CustomGrid(controller: controller)
+                    : ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: controller.productModel.length,
+                      itemBuilder: (context, index) {
+                        return FadeInLeftBig(
+                          from: index == 0 ? 25 : index * 50,
+                          child: ListItemCard(
+                            product: controller.productModel[index],
+                          ),
+                        );
+                      },
+                    ),
+
                 const SizedBox(height: 50),
 
                 CustomFavoriteButton(
