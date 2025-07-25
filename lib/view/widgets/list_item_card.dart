@@ -25,6 +25,7 @@ class ListItemCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
+                // ignore: deprecated_member_use
                 color: Colors.black.withOpacity(.03),
                 blurRadius: 8,
                 offset: const Offset(0, 5),

@@ -22,11 +22,7 @@ class TermsController extends GetxController {
   void _showIndicatorWithTimeout(Duration duration) {
     showIndicator.value = true;
 
-    Future.delayed(Duration(seconds: 3), () => showIndicator.value = false);
+    Future.delayed(const Duration(seconds: 3), () => showIndicator.value = false);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
