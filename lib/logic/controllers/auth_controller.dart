@@ -233,7 +233,7 @@ class AuthController extends GetxController {
         loginResult.accessToken!.tokenString,
       );
 
-      // ✅ Ask user before continuing
+      // Ask user before continuing
       final confirm = await Get.defaultDialog<bool>(
         title: "Continue as $displayUserName?",
         middleText: "Do you want to sign in with this Facebook account?",
@@ -248,7 +248,6 @@ class AuthController extends GetxController {
       );
 
       if (confirm == true) {
-        // ✅ Proceed with Firebase login
         await auth.signInWithCredential(credential);
         await auth.currentUser!.updateDisplayName(displayUserName);
         await auth.currentUser!.updatePhotoURL(displayUserImage);

@@ -8,7 +8,12 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: headerWidgetColor,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          colors: [headerWidgetColor, SecondHeaderWidgetColor],
+        ),
+      ),
       child: const Padding(
         padding: EdgeInsets.only(top: 100),
         child: Padding(
@@ -22,9 +27,35 @@ class HeaderWidget extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
               ),
+              SizedBox(height: 20),
+              JustForYouCard(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class JustForYouCard extends StatelessWidget {
+  const JustForYouCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      width: 150,
+      decoration: BoxDecoration(
+        color: Colors.deepOrange,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.2),
+            offset: const Offset(0, 10),
+            blurRadius: 8,
+            spreadRadius: 5,
+          ),
+        ],
       ),
     );
   }

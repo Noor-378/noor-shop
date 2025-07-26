@@ -9,4 +9,5 @@ Color lightGrey = const Color(0xFF424242);
 Color whiteColor = Colors.white;
 Color? contentColorDark = Colors.grey[900];
 Color? contentColor = Colors.blueGrey[50];
-Color? headerWidgetColor = Colors.blue.shade300;
+Color headerWidgetColor = Colors.blue.shade300;
+Color SecondHeaderWidgetColor = Colors.blueAccent;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
+import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
 
@@ -10,6 +11,8 @@ class DrawerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MainController mainController = Get.find<MainController>();
+
     return SafeArea(
       child: ListTileTheme(
         textColor: Colors.white,
@@ -38,7 +41,15 @@ class DrawerContent extends StatelessWidget {
               title: const Text('Profile'),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                advancedDrawer.hideDrawer();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  // ignore: unrelated_type_equality_checks
+                  if (mainController.currentIndex != 2) {
+                    mainController.changeIndex(2);
+                  }
+                });
+              },
               leading: Image.asset(
                 "assets/images/heart.png",
                 color: whiteColor,
