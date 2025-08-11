@@ -253,12 +253,12 @@ class AuthController extends GetxController {
         await auth.currentUser!.updatePhotoURL(displayUserImage);
 
         Get.offAllNamed(Routes.mainScreen);
-       
+
         customGetSnackbar(
           title: "Welcome!",
           messageText: "Hello, $displayUserName!",
         );
-         isLoading = false;
+        isLoading = false;
         update();
       } else {
         isLoading = false;

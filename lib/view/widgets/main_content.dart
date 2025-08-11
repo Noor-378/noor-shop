@@ -5,7 +5,6 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_nav_bar.dart';
-import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:noor_store/view/widgets/header_widget.dart';
 import 'package:noor_store/view/widgets/leading_icon.dart';
 
@@ -25,7 +24,7 @@ class MainContent extends StatelessWidget {
     return Scaffold(
       // body: controller.tabs[controller.currentIndex.value],
       body: DraggableHome(
-        headerExpandedHeight: .45,
+        headerExpandedHeight: .55,
         scrollController: scrollController,
         bottomNavigationBar: CustomNavBar(
           scrollController: scrollController,
