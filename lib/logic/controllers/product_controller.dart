@@ -18,18 +18,20 @@ class ProductController extends GetxController
   }
 
   var productModel = <ProductModel>[].obs;
-  var isLeading = true.obs;
+  var isLoading = true.obs;
   void getProducts() async {
     var product = await ProductServices.getProduct();
     // try{}finally{}  // enter the finally after finishing the try
     // try{}catch(e){} // enter the catch if the try have any error
     try {
-      isLeading(true);
+      isLoading(true);
+      update();
       if (product.isNotEmpty) {
         productModel.addAll(product);
       }
     } finally {
-      isLeading(false);
+      isLoading(false);
+      update();
     }
   }
 

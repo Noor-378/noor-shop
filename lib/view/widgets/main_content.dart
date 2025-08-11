@@ -68,7 +68,7 @@ class MainContent extends StatelessWidget {
           ),
         ],
         leading: FadeInLeft(child: LeadingIcon(advancedDrawer: advancedDrawer)),
-        headerWidget: FadeIn(child: const HeaderWidget()),
+        headerWidget: FadeIn(child:  HeaderWidget()),
         body: [
           IndexedStack(
             index: controller.currentIndex.value,
