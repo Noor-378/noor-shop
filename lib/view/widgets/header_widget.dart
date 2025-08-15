@@ -47,7 +47,10 @@ class HeaderWidget extends StatelessWidget {
               builder: (controller) {
                 return controller.isLoading.value
                     ? const ShimmerForHidder()
-                    : ListOfCards(controller: controller);
+                    : FadeInRightBig(
+                      from: 200,
+                      child: ListOfCards(controller: controller),
+                    );
               },
             ),
           ],
@@ -70,17 +73,15 @@ class ListOfCards extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
         itemBuilder: (context, index) {
-          return FadeInRight(
-            from: 200 + (index * 50), // farther for each card
-            delay: Duration(milliseconds: index * 100), // staggered entrance
-            child: JustForYouCard(
-              image:
-                  controller.productModel[index].image ??
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhCoPMSIngXopV7FgaNKeFGYZRPxh6edPcMw&s",
-              price: controller.productModel[index].price ?? 0,
-              rate: controller.productModel[index].rating!.rate,
-            ),
+          return JustForYouCard(
+            title: controller.productModel[index].title ?? "Null Title",
+            image:
+                controller.productModel[index].image ??
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhCoPMSIngXopV7FgaNKeFGYZRPxh6edPcMw&s",
+            price: controller.productModel[index].price ?? 0,
+            rate: controller.productModel[index].rating!.rate ?? 0,
           );
         },
         itemCount: controller.productModel.length,
@@ -94,11 +95,13 @@ class JustForYouCard extends StatelessWidget {
   const JustForYouCard({
     super.key,
     required this.image,
+    required this.title,
     required this.price,
     this.rate,
   });
 
   final String image;
+  final String title;
   final double price;
   final double? rate;
 
@@ -157,10 +160,43 @@ class JustForYouCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 15),
             ClipRRect(
               borderRadius: BorderRadius.circular(19),
-              child: Image.network(fit: BoxFit.contain, height: 125, image),
+              child: Image.network(
+                image,
+                fit: BoxFit.contain,
+                height: 112,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 112,
+                    width: 112,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.amber,
+                    ),
+                  ).redacted(context: context, redact: true);
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 112,
+                    color: Colors.grey.shade200,
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.broken_image, color: Colors.grey),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 15),
+            CustomText(
+              text: title,
+              fontSize: 14,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              color: blackColor,
+              fontWeight: FontWeight.w800,
             ),
             const Spacer(),
             Row(

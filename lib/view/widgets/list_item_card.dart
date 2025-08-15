@@ -6,6 +6,7 @@ import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
 import 'package:noor_store/view/widgets/custom_star.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
+import 'package:redacted/redacted.dart';
 
 class ListItemCard extends StatelessWidget {
   final ProductModel product;
@@ -34,12 +35,39 @@ class ListItemCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.network(
-                product.image ?? '',
-                height: 100,
-                width: 100,
-                fit: BoxFit.contain,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  10,
+                ), // adjust if you want more/less rounding
+                child: Image.network(
+                  product.image ?? '',
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.amber,
+                      ),
+                    ).redacted(context: context, redact: true);
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      color: Colors.grey.shade200,
+                      alignment: Alignment.center,
+                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                    );
+                  },
+                ),
               ),
+
               const SizedBox(width: 10),
               Expanded(
                 child: Column(

@@ -134,6 +134,7 @@ class CustomGrid extends StatelessWidget {
         return FadeInUpBig(
           from: height.toDouble(),
           child: ItemCard(
+            title: con.title ?? "Null Title",
             height: height.toDouble(),
             image: con.image!,
             price: "${con.price.toString()} \$",

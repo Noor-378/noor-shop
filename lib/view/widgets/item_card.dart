@@ -5,17 +5,21 @@ import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
 import 'package:noor_store/view/widgets/custom_star.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
+import 'package:redacted/redacted.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({
     super.key,
     required this.height,
     required this.image,
+    required this.title,
     required this.price,
     this.rate,
   });
+
   final double height;
   final String image;
+  final String title;
   final String price;
   final double? rate;
 
@@ -31,72 +35,105 @@ class ItemCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                // ignore: deprecated_member_use
                 color: Colors.black.withOpacity(.02),
-                offset: const Offset(0, 10), // Pushes it straight down
-                blurRadius: 8, // Smooth shadow
-                spreadRadius: 0, // No sideways growth
+                offset: const Offset(0, 10),
+                blurRadius: 8,
               ),
             ],
-            // shape: BoxShape.circle,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CustomAddToCartButton(
-                      onTap: (bool isLiked) async {
-                        isLiked
-                            ? customGetSnackbar(
-                              title: "false",
-                              messageText: "false",
-                            )
-                            : customGetSnackbar(
-                              title: "true",
-                              messageText: "true",
-                            );
-                        // You can add your logic here (API call, GetX update, etc.)
-                        return !isLiked;
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(19),
-                  child: Image.network(
-                    fit: BoxFit.contain,
-                    height: height - 100,
-                    image,
+                // Top content: AddToCart + Image + Title
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomAddToCartButton(
+                            onTap: (bool isLiked) async {
+                              isLiked
+                                  ? customGetSnackbar(
+                                    title: "false",
+                                    messageText: "false",
+                                  )
+                                  : customGetSnackbar(
+                                    title: "true",
+                                    messageText: "true",
+                                  );
+                              return !isLiked;
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Flexible(
+                        flex: 3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.contain,
+                            width: double.infinity,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.amber,
+                                ),
+                              ).redacted(context: context, redact: true);
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey.shade200,
+                                alignment: Alignment.center,
+                                child: const Icon(
+                                  Icons.broken_image,
+                                  color: Colors.grey,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Flexible(
+                        child: CustomText(
+                          text: title,
+                          fontSize: 14,
+                          color: blackColor,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const Spacer(),
+
+                // Bottom row: Rating + Price
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        SingleStarRating(
-                          rate: rate ?? 0,
-                          size: 30,
-                          max: 5,
-                        ), // fill is 50%
-                        const SizedBox(width: 8),
+                        SingleStarRating(rate: rate ?? 0, size: 30, max: 5),
+                        const SizedBox(width: 5),
                         CustomText(
-                          text: rate.toString(),
-                         fontSize: 12,
-                      color: blackColor,
-                      fontWeight: FontWeight.w800,
+                          text: rate?.toString() ?? "0",
+                          fontSize: 12,
+                          color: blackColor,
+                          fontWeight: FontWeight.w800,
                         ),
                       ],
                     ),
-
                     CustomText(
-                      // ideia* to make it like gample :)
-                      // if the user press on the price, become lower
                       text: price,
                       fontSize: 12,
                       color: blackColor,
@@ -108,6 +145,8 @@ class ItemCard extends StatelessWidget {
             ),
           ),
         ),
+
+        // Favorite button
         Container(
           height: 40,
           width: 50,
