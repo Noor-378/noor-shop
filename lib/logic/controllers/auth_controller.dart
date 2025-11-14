@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -210,6 +212,7 @@ class AuthController extends GetxController {
     } catch (e) {
       isLoading = false;
       update();
+      log("error login with google $e");
       customGetSnackbar(
         title: "Google Sign-In Failed",
         messageText: e.toString(),
@@ -253,12 +256,12 @@ class AuthController extends GetxController {
         await auth.currentUser!.updatePhotoURL(displayUserImage);
 
         Get.offAllNamed(Routes.mainScreen);
-       
+
         customGetSnackbar(
           title: "Welcome!",
           messageText: "Hello, $displayUserName!",
         );
-         isLoading = false;
+        isLoading = false;
         update();
       } else {
         isLoading = false;
