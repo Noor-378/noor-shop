@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.isLeading.value) {
+      if (controller.isLoading.value) {
         return const ShoeWidget().redacted(context: context, redact: true);
       } else {
         return FadeInUp(
@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                           fontSize: 18,
                           color: blackColor,
                         ),
+                        const SizedBox(height: 5),
                         CustomText(
                           text: "Top Products Everyone’s Loving",
                           fontSize: 16,
@@ -133,6 +134,7 @@ class CustomGrid extends StatelessWidget {
         return FadeInUpBig(
           from: height.toDouble(),
           child: ItemCard(
+            title: con.title ?? "Null Title",
             height: height.toDouble(),
             image: con.image!,
             price: "${con.price.toString()} \$",

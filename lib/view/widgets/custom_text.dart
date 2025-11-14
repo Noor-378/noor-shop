@@ -11,6 +11,7 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     super.key,
+    this.decoration = TextDecoration.none,
   });
   final String text;
   final double fontSize;
@@ -19,6 +20,7 @@ class CustomText extends StatelessWidget {
   final TextAlign textAlign;
   final int? maxLines;
   final TextOverflow? overflow;
+  final TextDecoration decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CustomText extends StatelessWidget {
       overflow: overflow,
       style: GoogleFonts.lato(
         textStyle: TextStyle(
+          decoration: decoration,
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: color, //

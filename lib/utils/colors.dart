@@ -10,4 +10,5 @@ Color whiteColor = Colors.white;
 Color? contentColorDark = Colors.grey[900];
 Color? contentColor = Colors.blueGrey[50];
 Color headerWidgetColor = Colors.blue.shade300;
+// ignore: non_constant_identifier_names
 Color SecondHeaderWidgetColor = Colors.blueAccent;
