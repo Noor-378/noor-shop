@@ -31,6 +31,7 @@ dependencies:
   page_flip: ^0.2.5+1 # to make a page flip animation
   # youtube_player_flutter: ^8.1.1
   webview_flutter: ^4.0.7 
+  get_storage:
 
 
 

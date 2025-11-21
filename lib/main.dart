@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:noor_store/logic/controllers/auth_controller.dart';
+import 'package:noor_store/logic/controllers/theme_controller.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/themes/light_theme.dart';
 
@@ -13,6 +16,7 @@ Future<void> main() async {
     SystemUiMode.manual,
     overlays: [SystemUiOverlay.top],
   );
+  await GetStorage.init();
 
   Get.put(AuthController());
 
@@ -33,9 +37,14 @@ class MyApp extends StatelessWidget {
       //           : LightAppColors.mainColor,
       // ),
       theme: LightTheme.light,
+      themeMode: ThemeController().themeDataGet,
       // darkTheme: DarkTheme.dark,
       // home: const WelcomeScreen(),
-      initialRoute: AppRoutes.welcome,
+      initialRoute:
+          FirebaseAuth.instance.currentUser != null ||
+                  GetStorage().read<bool>("auth") == true
+              ? AppRoutes.mainSreen
+              : AppRoutes.welcome,
       getPages: AppRoutes.routes,
     );
   }

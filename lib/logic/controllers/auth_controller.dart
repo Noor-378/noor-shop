@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:noor_store/model/facebook_model.dart';
@@ -27,6 +28,8 @@ class AuthController extends GetxController {
   bool singupMainButton = false;
   bool forgetPasswordMainButton = false;
   bool isLoading = false;
+  bool isSignIn = false;
+  final GetStorage authBox = GetStorage();
 
   // Firebase
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -107,6 +110,8 @@ class AuthController extends GetxController {
             auth.currentUser!.updateDisplayName(displayUserName);
           });
       final user = FirebaseAuth.instance.currentUser;
+      isSignIn = true;
+      authBox.write("auth", isSignIn);
 
       Get.offNamed(Routes.loginScreen);
       user!.sendEmailVerification();
@@ -149,6 +154,8 @@ class AuthController extends GetxController {
         );
         return;
       }
+      isSignIn = true;
+      authBox.write("auth", isSignIn);
 
       Get.offAllNamed(Routes.mainScreen);
       customGetSnackbar(
@@ -204,6 +211,9 @@ class AuthController extends GetxController {
       displayUserImage = googleUser.photoUrl ?? '';
 
       await auth.signInWithCredential(credential);
+      isSignIn = true;
+      authBox.write("auth", isSignIn);
+
       Get.offAllNamed(Routes.mainScreen);
       customGetSnackbar(
         title: "Welcome!",
@@ -217,67 +227,81 @@ class AuthController extends GetxController {
         title: "Google Sign-In Failed",
         messageText: e.toString(),
       );
+    } finally {
+      isLoading = false;
+      update();
     }
   }
 
   Future<void> signInWithFacebook() async {
-    final loginResult = await FacebookAuth.instance.login();
-    isLoading = true;
-    update();
+    try {
+      final loginResult = await FacebookAuth.instance.login();
+      isLoading = true;
+      update();
 
-    if (loginResult.status == LoginStatus.success) {
-      final data = await FacebookAuth.instance.getUserData();
-      facebookModel = FacebookModel.fromJson(data);
+      if (loginResult.status == LoginStatus.success) {
+        final data = await FacebookAuth.instance.getUserData();
+        facebookModel = FacebookModel.fromJson(data);
 
-      displayUserName = facebookModel?.name ?? '';
-      displayUserImage = facebookModel?.picture?.url ?? '';
+        displayUserName = facebookModel?.name ?? '';
+        displayUserImage = facebookModel?.picture?.url ?? '';
 
-      final credential = FacebookAuthProvider.credential(
-        loginResult.accessToken!.tokenString,
-      );
-
-      // Ask user before continuing
-      final confirm = await Get.defaultDialog<bool>(
-        title: "Continue as $displayUserName?",
-        middleText: "Do you want to sign in with this Facebook account?",
-        textConfirm: "Yes",
-        textCancel: "No",
-        // confirmTextColor: Colors.black,
-        // cancelTextColor: Colors.black,
-        backgroundColor: whiteColor,
-        buttonColor: mainColor,
-        contentPadding: const EdgeInsets.all(25),
-        onConfirm: () => Get.back(result: true),
-      );
-
-      if (confirm == true) {
-        await auth.signInWithCredential(credential);
-        await auth.currentUser!.updateDisplayName(displayUserName);
-        await auth.currentUser!.updatePhotoURL(displayUserImage);
-
-        Get.offAllNamed(Routes.mainScreen);
-
-        customGetSnackbar(
-          title: "Welcome!",
-          messageText: "Hello, $displayUserName!",
+        final credential = FacebookAuthProvider.credential(
+          loginResult.accessToken!.tokenString,
         );
-        isLoading = false;
-        update();
+
+        // Ask user before continuing
+        final confirm = await Get.defaultDialog<bool>(
+          title: "Continue as $displayUserName?",
+          middleText: "Do you want to sign in with this Facebook account?",
+          textConfirm: "Yes",
+          textCancel: "No",
+          // confirmTextColor: Colors.black,
+          // cancelTextColor: Colors.black,
+          backgroundColor: whiteColor,
+          buttonColor: mainColor,
+          contentPadding: const EdgeInsets.all(25),
+          onConfirm: () => Get.back(result: true),
+        );
+
+        if (confirm == true) {
+          await auth.signInWithCredential(credential);
+          await auth.currentUser!.updateDisplayName(displayUserName);
+          await auth.currentUser!.updatePhotoURL(displayUserImage);
+
+          Get.offAllNamed(Routes.mainScreen);
+
+          customGetSnackbar(
+            title: "Welcome!",
+            messageText: "Hello, $displayUserName!",
+          );
+          isSignIn = true;
+
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+          customGetSnackbar(
+            title: "Cancelled",
+            messageText: "Login was cancelled.",
+          );
+        }
       } else {
         isLoading = false;
         update();
         customGetSnackbar(
-          title: "Cancelled",
-          messageText: "Login was cancelled.",
+          title: "Facebook Sign-In Failed",
+          messageText: "Try again.",
         );
       }
-    } else {
+    } catch (e) {
       isLoading = false;
       update();
-      customGetSnackbar(
-        title: "Facebook Sign-In Failed",
-        messageText: "Try again.",
-      );
+      log("error in facebook");
+    } finally {
+      isLoading = false;
+      update();
     }
   }
 
@@ -296,6 +320,24 @@ class AuthController extends GetxController {
           'title': e.code,
           'message': e.message ?? 'Authentication error',
         };
+    }
+  }
+
+  void signOutFromApp() async {
+    try {
+      await auth.signOut();
+      await googleSignIn.signOut();
+      await FacebookAuth.i.logOut();
+      displayUserName = '';
+      displayUserImage = '';
+      isSignIn = false;
+      authBox.remove("auth");
+
+      Get.offAllNamed(Routes.loginScreen);
+
+      update();
+    } catch (e) {
+      customGetSnackbar(title: "Error!", messageText: e.toString());
     }
   }
 }
