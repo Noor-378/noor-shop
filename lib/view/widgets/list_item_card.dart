@@ -10,7 +10,16 @@ import 'package:redacted/redacted.dart';
 
 class ListItemCard extends StatelessWidget {
   final ProductModel product;
-  const ListItemCard({super.key, required this.product});
+  const ListItemCard({
+    super.key,
+    required this.product,
+    required this.isLiked,
+    required this.addToCartOnTap,
+    required this.addToFavOnTap,
+  });
+  final isLiked;
+  final Future<bool?> Function(bool)? addToCartOnTap;
+  final Future<bool?> Function(bool)? addToFavOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -123,24 +132,10 @@ class ListItemCard extends StatelessWidget {
           ),
         ),
 
-        // Favorite button top-left
         Positioned(
           top: 15,
           left: 5,
-          child: CustomFavoriteButton(
-            onTap: (bool isLiked) async {
-              isLiked
-                  ? customGetSnackbar(
-                    title: "Removed",
-                    messageText: "Removed from favorites",
-                  )
-                  : customGetSnackbar(
-                    title: "Added",
-                    messageText: "Added to favorites",
-                  );
-              return !isLiked;
-            },
-          ),
+          child: CustomFavoriteButton(isLiked: isLiked, onTap: addToFavOnTap),
         ),
 
         Positioned(
@@ -155,20 +150,7 @@ class ListItemCard extends StatelessWidget {
                 bottomLeft: Radius.circular(15),
               ),
             ),
-            child: CustomAddToCartButton(
-              onTap: (bool isLiked) async {
-                isLiked
-                    ? customGetSnackbar(
-                      title: "Removed",
-                      messageText: "Removed from cart",
-                    )
-                    : customGetSnackbar(
-                      title: "Added",
-                      messageText: "Added to cart",
-                    );
-                return !isLiked;
-              },
-            ),
+            child: CustomAddToCartButton(onTap: addToCartOnTap),
           ),
         ),
       ],

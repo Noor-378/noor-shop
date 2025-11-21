@@ -76,32 +76,34 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                controller.isGridView.value
-                    ? CustomGrid(controller: controller)
-                    : ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.productModel.length,
-                      itemBuilder: (context, index) {
-                        return FadeInLeftBig(
-                          from: index == 0 ? 25 : index * 50,
-                          child: ListItemCard(
-                            product: controller.productModel[index],
+                Obx(
+                  () =>
+                      controller.isGridView.value
+                          ? CustomGrid(controller: controller)
+                          : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.productModel.length,
+                            itemBuilder: (context, index) {
+                              int productId =
+                                  controller.productModel[index].id ?? 0;
+                              return FadeInLeftBig(
+                                from: index == 0 ? 25 : index * 50,
+                                child: ListItemCard(
+                                  addToCartOnTap: (p0) async {
+                                    return false;
+                                  },
+                                  addToFavOnTap: (p0) async {
+                                    controller.manageFavorites(productId);
+                                    return !p0;
+                                  },
+                                  isLiked: controller.isFavorites(productId),
+                                  product: controller.productModel[index],
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-
-                const SizedBox(height: 50),
-
-                CustomFavoriteButton(
-                  onTap: (isLike) async {
-                    return !isLike;
-                  },
                 ),
-                const SizedBox(height: 50),
-                // MyHomePage(tabController: controller.tap!, itemsMode: controller.productModel)
               ],
             ),
           ),
@@ -130,15 +132,25 @@ class CustomGrid extends StatelessWidget {
       itemBuilder: (context, index) {
         final height = 200 + random.nextInt(150);
         final con = controller.productModel[index];
-
+        int productId = con.id ?? 0;
         return FadeInUpBig(
           from: height.toDouble(),
-          child: ItemCard(
-            title: con.title ?? "Null Title",
-            height: height.toDouble(),
-            image: con.image!,
-            price: "${con.price.toString()} \$",
-            rate: con.rating?.rate ?? 0,
+          child: Obx(
+            () => ItemCard(
+              addToChartOnTap: (p0) async {
+                return !p0;
+              },
+              addToFavOnTap: (p0) async {
+                controller.manageFavorites(productId);
+                return !p0;
+              },
+              isLiked: controller.isFavorites(productId),
+              title: con.title ?? "Null Title",
+              height: height.toDouble(),
+              image: con.image!,
+              price: "${con.price.toString()} \$",
+              rate: con.rating?.rate ?? 0,
+            ),
           ),
         );
       },

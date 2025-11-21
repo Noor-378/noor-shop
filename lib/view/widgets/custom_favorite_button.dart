@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
 class CustomFavoriteButton extends StatelessWidget {
-  const CustomFavoriteButton({super.key, required this.onTap});
+  const CustomFavoriteButton({
+    super.key,
+    required this.onTap,
+    required this.isLiked,
+  });
   final Future<bool?> Function(bool)? onTap;
+  final bool isLiked;
 
   @override
   Widget build(BuildContext context) {
     return LikeButton(
       size: 25,
+      isLiked: isLiked,
       circleColor: const CircleColor(start: Colors.pink, end: Colors.redAccent),
       bubblesColor: const BubblesColor(
         dotPrimaryColor: Colors.red,

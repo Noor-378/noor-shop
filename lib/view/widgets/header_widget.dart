@@ -136,6 +136,7 @@ class JustForYouCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomFavoriteButton(
+                  isLiked: false,
                   onTap: (bool isLiked) async {
                     isLiked
                         ? customGetSnackbar(

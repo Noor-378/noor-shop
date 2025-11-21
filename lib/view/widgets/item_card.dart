@@ -14,6 +14,9 @@ class ItemCard extends StatelessWidget {
     required this.image,
     required this.title,
     required this.price,
+    required this.isLiked,
+    required this.addToChartOnTap,
+    required this.addToFavOnTap,
     this.rate,
   });
 
@@ -22,6 +25,9 @@ class ItemCard extends StatelessWidget {
   final String title;
   final String price;
   final double? rate;
+  final bool isLiked;
+  final Future<bool?> Function(bool)? addToChartOnTap;
+  final Future<bool?> Function(bool)? addToFavOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -54,20 +60,7 @@ class ItemCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CustomAddToCartButton(
-                            onTap: (bool isLiked) async {
-                              isLiked
-                                  ? customGetSnackbar(
-                                    title: "false",
-                                    messageText: "false",
-                                  )
-                                  : customGetSnackbar(
-                                    title: "true",
-                                    messageText: "true",
-                                  );
-                              return !isLiked;
-                            },
-                          ),
+                          CustomAddToCartButton(onTap: addToChartOnTap),
                         ],
                       ),
                       const SizedBox(height: 15),
@@ -156,14 +149,7 @@ class ItemCard extends StatelessWidget {
               bottomRight: Radius.circular(15),
             ),
           ),
-          child: CustomFavoriteButton(
-            onTap: (bool isLiked) async {
-              isLiked
-                  ? customGetSnackbar(title: "false", messageText: "false")
-                  : customGetSnackbar(title: "true", messageText: "true");
-              return !isLiked;
-            },
-          ),
+          child: CustomFavoriteButton(isLiked: isLiked, onTap: addToFavOnTap),
         ),
       ],
     );
