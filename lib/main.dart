@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:noor_store/logic/controllers/auth_controller.dart';
+import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/theme_controller.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/themes/light_theme.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
   await GetStorage.init();
 
   Get.put(AuthController());
+    Get.put(CartController(), permanent: true);
 
   runApp(const MyApp());
 }

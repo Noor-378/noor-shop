@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_add_to_cart_button.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
@@ -17,6 +19,7 @@ class ItemCard extends StatelessWidget {
     required this.isLiked,
     required this.addToChartOnTap,
     required this.addToFavOnTap,
+    required this.isLikedForCart,
     this.rate,
   });
 
@@ -26,6 +29,7 @@ class ItemCard extends StatelessWidget {
   final String price;
   final double? rate;
   final bool isLiked;
+  final bool isLikedForCart;
   final Future<bool?> Function(bool)? addToChartOnTap;
   final Future<bool?> Function(bool)? addToFavOnTap;
 
@@ -60,7 +64,13 @@ class ItemCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CustomAddToCartButton(onTap: addToChartOnTap),
+                          GetBuilder<CartController>(
+                            builder:
+                                (controller) => CustomAddToCartButton(
+                                  isLiked: isLikedForCart,
+                                  onTap: addToChartOnTap,
+                                ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 15),

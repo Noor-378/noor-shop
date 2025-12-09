@@ -3,13 +3,15 @@ import 'package:like_button/like_button.dart';
 import 'package:noor_store/utils/colors.dart';
 
 class CustomAddToCartButton extends StatelessWidget {
-  const CustomAddToCartButton({super.key, required this.onTap});
+  const CustomAddToCartButton({super.key, required this.onTap,required this.isLiked});
   final Future<bool?> Function(bool)? onTap;
+  final bool isLiked;
 
   @override
   Widget build(BuildContext context) {
     return LikeButton(
       size: 25,
+      isLiked: isLiked,
       circleColor: const CircleColor(
         start: Colors.blue,
         end: Colors.blueAccent,

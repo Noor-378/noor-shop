@@ -2,7 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/product_controller.dart';
+import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
@@ -119,6 +121,8 @@ class CustomGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
+
     final random = Random();
     return MasonryGridView.builder(
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -135,22 +139,28 @@ class CustomGrid extends StatelessWidget {
         int productId = con.id ?? 0;
         return FadeInUpBig(
           from: height.toDouble(),
-          child: Obx(
-            () => ItemCard(
-              addToChartOnTap: (p0) async {
-                return !p0;
-              },
-              addToFavOnTap: (p0) async {
-                controller.manageFavorites(productId);
-                return !p0;
-              },
-              isLiked: controller.isFavorites(productId),
-              title: con.title ?? "Null Title",
-              height: height.toDouble(),
-              image: con.image!,
-              price: "${con.price.toString()} \$",
-              rate: con.rating?.rate ?? 0,
-            ),
+          child: GetBuilder<CartController>(
+            builder: (cartcart) {
+              return Obx(
+                () => ItemCard(
+                  isLikedForCart: cartcart.isInCart(con),
+                  addToChartOnTap: (p0) async {
+                    cartController.addProductToCart(con);
+                    return !p0;
+                  },
+                  addToFavOnTap: (p0) async {
+                    controller.manageFavorites(productId);
+                    return !p0;
+                  },
+                  isLiked: controller.isFavorites(productId),
+                  title: con.title ?? "Null Title",
+                  height: height.toDouble(),
+                  image: con.image!,
+                  price: "${con.price.toString()} \$",
+                  rate: con.rating?.rate ?? 0,
+                ),
+              );
+            },
           ),
         );
       },

@@ -3,7 +3,6 @@ import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_add_to_cart_button.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
-import 'package:noor_store/view/widgets/custom_snackbar.dart';
 import 'package:noor_store/view/widgets/custom_star.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:redacted/redacted.dart';
@@ -150,7 +149,7 @@ class ListItemCard extends StatelessWidget {
                 bottomLeft: Radius.circular(15),
               ),
             ),
-            child: CustomAddToCartButton(onTap: addToCartOnTap),
+            child: CustomAddToCartButton(onTap: addToCartOnTap, isLiked: false),
           ),
         ),
       ],

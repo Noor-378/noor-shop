@@ -12,7 +12,7 @@ import 'package:redacted/redacted.dart';
 
 class HeaderWidget extends StatelessWidget {
   HeaderWidget({super.key});
-  final controller = Get.put(ProductController());
+  final controller = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -148,6 +148,7 @@ class JustForYouCard extends StatelessWidget {
                   },
                 ),
                 CustomAddToCartButton(
+                  isLiked: false,
                   onTap: (bool isLiked) async {
                     isLiked
                         ? customGetSnackbar(

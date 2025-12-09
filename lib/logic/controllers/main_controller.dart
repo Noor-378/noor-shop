@@ -24,7 +24,7 @@ class MainController extends GetxController {
           HomeScreen(),
           const CategoryScreen(),
           const FavoritesScreen(),
-          const CartScreen(),
+          CartScreen(),
         ].obs;
   }
 
