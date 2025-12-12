@@ -6,6 +6,7 @@ import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/product_controller.dart';
 import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/screens/product_details_screen.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:noor_store/view/widgets/item_card.dart';
@@ -143,6 +144,9 @@ class CustomGrid extends StatelessWidget {
             builder: (cartcart) {
               return Obx(
                 () => ItemCard(
+                  onTap: () {
+                    Get.to(ProductDetailsScreen(productModel: con));
+                  },
                   isLikedForCart: cartcart.isInCart(con),
                   addToChartOnTap: (p0) async {
                     cartController.addProductToCart(con);
