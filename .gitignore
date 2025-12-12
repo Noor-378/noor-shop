@@ -51,4 +51,5 @@ android/app/google-services.json
 android/app/src/main/res/values/strings.xml
 
 # Local tools
+sdkmanager
 sdkmanager/
