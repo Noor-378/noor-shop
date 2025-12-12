@@ -24,8 +24,7 @@ Future<void> main() async {
   Get.put(AuthController());
   Get.put(ProductController());
   Get.put(CartController(), permanent: true);
-  Get.put(CategoryController(), );
-
+  Get.put(CategoryController());
 
   runApp(const MyApp());
 }
