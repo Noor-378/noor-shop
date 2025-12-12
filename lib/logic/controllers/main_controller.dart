@@ -18,7 +18,6 @@ class MainController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // ✅ initialize after scrollController is created
     tabs =
         [
           HomeScreen(),

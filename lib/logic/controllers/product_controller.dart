@@ -10,12 +10,17 @@ import 'package:noor_store/services/product_services.dart';
 class ProductController extends GetxController
     with GetTickerProviderStateMixin {
   late TabController tabController;
+  final searchController = TextEditingController();
 
   @override
   void onInit() {
     getProducts();
     _loadFavorites();
     tabController = TabController(length: 2, vsync: this);
+    searchController.addListener(() {
+      final query = searchController.text;
+      searchLogic(query);
+    });
 
     super.onInit();
   }
@@ -27,6 +32,7 @@ class ProductController extends GetxController
     }
   }
 
+  var searchList = <ProductModel>[].obs;
   var productModel = <ProductModel>[].obs;
   var favoritesList = <ProductModel>[].obs;
   var storage = GetStorage();
@@ -68,6 +74,18 @@ class ProductController extends GetxController
 
   bool isFavorites(int productId) {
     return favoritesList.any((element) => element.id == productId);
+  }
+
+  void searchLogic(String query) {
+    if (query.isEmpty) {
+      searchList.clear();
+      return;
+    }
+    searchList.assignAll(
+      productModel.where(
+        (product) => product.title!.toLowerCase().contains(query.toLowerCase()),
+      ),
+    );
   }
 
   var isGridView = true.obs;

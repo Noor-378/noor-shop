@@ -17,7 +17,8 @@ import 'package:redacted/redacted.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final controller = Get.put(ProductController());
+  final controller = Get.find<ProductController>();
+  Random randomNumber = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -79,34 +80,43 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Obx(
-                  () =>
-                      controller.isGridView.value
-                          ? CustomGrid(controller: controller)
-                          : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: controller.productModel.length,
-                            itemBuilder: (context, index) {
-                              int productId =
-                                  controller.productModel[index].id ?? 0;
-                              return FadeInLeftBig(
-                                from: index == 0 ? 25 : index * 50,
-                                child: ListItemCard(
-                                  addToCartOnTap: (p0) async {
-                                    return false;
-                                  },
-                                  addToFavOnTap: (p0) async {
-                                    controller.manageFavorites(productId);
-                                    return !p0;
-                                  },
-                                  isLiked: controller.isFavorites(productId),
-                                  product: controller.productModel[index],
-                                ),
-                              );
-                            },
-                          ),
-                ),
+                Obx(() {
+                  final products =
+                      controller.searchList.isNotEmpty
+                          ? controller.searchList
+                          : controller.productModel;
+
+                  return controller.isGridView.value
+                      ? CustomGrid(
+                        controller: controller,
+                        products: products,
+                        randomNumber: randomNumber,
+                      )
+                      : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          final productId = product.id ?? 0;
+
+                          return FadeInLeftBig(
+                            from: index == 0 ? 25 : index * 50,
+                            child: ListItemCard(
+                              addToCartOnTap: (p0) async {
+                                return false;
+                              },
+                              addToFavOnTap: (p0) async {
+                                controller.manageFavorites(productId);
+                                return !p0;
+                              },
+                              isLiked: controller.isFavorites(productId),
+                              product: product,
+                            ),
+                          );
+                        },
+                      );
+                }),
               ],
             ),
           ),
@@ -117,27 +127,36 @@ class HomeScreen extends StatelessWidget {
 }
 
 class CustomGrid extends StatelessWidget {
-  const CustomGrid({super.key, required this.controller});
+  const CustomGrid({
+    super.key,
+    required this.controller,
+    required this.products,
+    required this.randomNumber,
+  });
+
   final ProductController controller;
+  final List<ProductModel> products;
+  final Random randomNumber;
 
   @override
   Widget build(BuildContext context) {
     final CartController cartController = Get.find<CartController>();
+    final random = randomNumber;
 
-    final random = Random();
     return MasonryGridView.builder(
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
-      itemCount: controller.productModel.length,
+      itemCount: products.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
+        final con = products[index];
         final height = 200 + random.nextInt(150);
-        final con = controller.productModel[index];
-        int productId = con.id ?? 0;
+        final productId = con.id ?? 0;
+
         return FadeInUpBig(
           from: height.toDouble(),
           child: GetBuilder<CartController>(
@@ -146,7 +165,7 @@ class CustomGrid extends StatelessWidget {
                 () => ItemCard(
                   heroTag: 'product_${con.id}',
                   onTap: () {
-                    Get.to(ProductDetailsScreen(productModel: con));
+                    Get.to(() => ProductDetailsScreen(productModel: con));
                   },
                   isLikedForCart: cartcart.isInCart(con),
                   addToChartOnTap: (p0) async {
@@ -161,7 +180,7 @@ class CustomGrid extends StatelessWidget {
                   title: con.title ?? "Null Title",
                   height: height.toDouble(),
                   image: con.image!,
-                  price: "${con.price.toString()} \$",
+                  price: "${con.price} \$",
                   rate: con.rating?.rate ?? 0,
                 ),
               );
