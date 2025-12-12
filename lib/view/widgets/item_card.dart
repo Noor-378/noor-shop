@@ -21,6 +21,7 @@ class ItemCard extends StatelessWidget {
     required this.addToFavOnTap,
     required this.isLikedForCart,
     required this.onTap,
+    required this.heroTag,
     this.rate,
   });
 
@@ -34,6 +35,7 @@ class ItemCard extends StatelessWidget {
   final Future<bool?> Function(bool)? addToChartOnTap;
   final Future<bool?> Function(bool)? addToFavOnTap;
   final void Function()? onTap;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -80,36 +82,39 @@ class ItemCard extends StatelessWidget {
                         const SizedBox(height: 15),
                         Flexible(
                           flex: 3,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              image,
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              loadingBuilder: (
-                                context,
-                                child,
-                                loadingProgress,
-                              ) {
-                                if (loadingProgress == null) return child;
-                                return Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.amber,
-                                  ),
-                                ).redacted(context: context, redact: true);
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey.shade200,
-                                  alignment: Alignment.center,
-                                  child: const Icon(
-                                    Icons.broken_image,
-                                    color: Colors.grey,
-                                  ),
-                                );
-                              },
+                          child: Hero(
+                            tag: heroTag,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                image,
+                                fit: BoxFit.contain,
+                                width: double.infinity,
+                                loadingBuilder: (
+                                  context,
+                                  child,
+                                  loadingProgress,
+                                ) {
+                                  if (loadingProgress == null) return child;
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.amber,
+                                    ),
+                                  ).redacted(context: context, redact: true);
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey.shade200,
+                                    alignment: Alignment.center,
+                                    child: const Icon(
+                                      Icons.broken_image,
+                                      color: Colors.grey,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),

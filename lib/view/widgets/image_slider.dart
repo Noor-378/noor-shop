@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ImageSliders extends StatefulWidget {
   final String imageUrl;
-  const ImageSliders({required this.imageUrl, Key? key}) : super(key: key);
+  final String productId;
+  const ImageSliders({
+    required this.imageUrl,
+    super.key,
+    required this.productId,
+  });
 
   @override
   _ImageSlidersState createState() => _ImageSlidersState();
@@ -32,7 +38,6 @@ class _ImageSlidersState extends State<ImageSliders>
   int currentPage = 0;
   int currentColor = 0;
 
-  /// PRODUCT COLORS
   final List<Color> colorSelected = [
     kCOlor1,
     kCOlor2,
@@ -64,7 +69,6 @@ class _ImageSlidersState extends State<ImageSliders>
     _startAutoPlay();
   }
 
-  /// AUTO PLAY FOR INDICATOR + SLIDER
   void _startAutoPlay() {
     _autoPlayTimer?.cancel();
 
@@ -96,198 +100,179 @@ class _ImageSlidersState extends State<ImageSliders>
         double sliderHeight = constraints.maxWidth * 0.9;
 
         return SizedBox(
-          height: sliderHeight, // <-- FIX: indicator always stays inside
+          height: sliderHeight,
           child: Stack(
             alignment: Alignment.center,
             children: [
-              /// SLIDER
-              FadeTransition(
-                opacity: _imageController,
-                child: CarouselSlider.builder(
-                  itemCount: _totalPages,
-                  carouselController: _carouselController,
-                  options: CarouselOptions(
-                    height: sliderHeight,
-                    viewportFraction: 1,
-                    autoPlay: false,
-                    enableInfiniteScroll: true,
-                    enlargeCenterPage: true,
-                    enlargeFactor: .5,
-                    onPageChanged: (index, reason) {
-                      setState(() => currentPage = index);
-                    },
-                  ),
-                  itemBuilder: (context, index, realIndex) {
-                    return Center(
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            widget.imageUrl,
-                            fit: BoxFit.contain, // <-- FIX small images
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
-                    );
+              CarouselSlider.builder(
+                itemCount: _totalPages,
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  height: sliderHeight,
+                  viewportFraction: 1,
+                  autoPlay: false,
+                  enableInfiniteScroll: true,
+                  enlargeCenterPage: true,
+                  enlargeFactor: .5,
+                  onPageChanged: (index, reason) {
+                    setState(() => currentPage = index);
                   },
                 ),
+                itemBuilder: (context, index, realIndex) {
+                  return Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Hero(
+                        tag: 'product_${widget.productId}',
+                        child: Image.network(
+                          widget.imageUrl,
+                          fit: BoxFit.contain,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
 
-              /// INDICATOR (NOW ALWAYS INSIDE)
               Positioned(
                 bottom: 10,
                 left: 0,
                 right: 0,
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.25),
-                        width: 1,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 18,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: AnimatedSmoothIndicator(
-                      activeIndex: currentPage,
-                      count: _totalPages,
-                      effect: ExpandingDotsEffect(
-                        dotHeight: 6,
-                        dotWidth: 6,
-                        expansionFactor: 3,
-                        spacing: 6,
-                        activeDotColor: Colors.white,
-                        dotColor: Colors.white.withOpacity(0.3),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              /// COLOR PICKER (RIGHT SIDE)
-              Positioned(
-                right: 20,
-                bottom: 20,
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(1.2, 0),
-                    end: Offset.zero,
-                  ).animate(
-                    CurvedAnimation(
-                      parent: _colorPickerController,
-                      curve: Curves.easeOutBack,
-                    ),
-                  ),
-                  child: FadeTransition(
-                    opacity: _colorPickerController,
+                child: FadeInUpBig(
+                  from: 10,
+                  child: Center(
                     child: Container(
-                      height: 180,
-                      width: 50,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.18),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.3),
-                          width: 1.2,
+                          color: Colors.white.withOpacity(0.25),
+                          width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.15),
-                            blurRadius: 20,
-                            offset: const Offset(0, 5),
+                            blurRadius: 18,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
-                      child: Column(
-                        children: [
-                          // ICON
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            child: const Icon(
-                              Icons.color_lens_rounded,
-                              size: 14,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-
-                          // COLORS
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: colorSelected.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      currentColor = index;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 6,
-                                    ),
-                                    child: AnimatedScale(
-                                      scale: currentColor == index ? 1.15 : 1.0,
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      child: ColorPicker(
-                                        color: colorSelected[index],
-                                        outerBorder: currentColor == index,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                      child: AnimatedSmoothIndicator(
+                        activeIndex: currentPage,
+                        count: _totalPages,
+                        effect: ExpandingDotsEffect(
+                          dotHeight: 6,
+                          dotWidth: 6,
+                          expansionFactor: 3,
+                          spacing: 6,
+                          activeDotColor: mainColor,
+                          dotColor: Colors.white.withOpacity(0.3),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
 
-              /// NAV BUTTONS
+              Positioned(
+                right: 20,
+                bottom: 20,
+                child: FadeInRightBig(
+                  from: 10,
+                  child: Container(
+                    height: 180,
+                    width: 50,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1.2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: const Icon(
+                            Icons.color_lens_rounded,
+                            size: 14,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: colorSelected.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    currentColor = index;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 6,
+                                  ),
+                                  child: AnimatedScale(
+                                    scale: currentColor == index ? 1.15 : 1.0,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: ColorPicker(
+                                      color: colorSelected[index],
+                                      outerBorder: currentColor == index,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               Positioned(
                 top: 20,
                 left: 20,
                 right: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildNavButton(
-                      icon: Icons.arrow_back_ios_new,
-                      onTap: () => Get.back(),
-                    ),
-                    _buildNavButton(
-                      icon: Icons.shopping_cart_outlined,
-                      onTap: () => Get.to(() => CartScreen()),
-                    ),
-                  ],
+                child: FadeInDownBig(
+                  from: 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildNavButton(
+                        icon: Icons.arrow_back_ios_new,
+                        onTap: () => Get.back(),
+                      ),
+                      _buildNavButton(
+                        icon: Icons.shopping_cart_outlined,
+                        onTap: () => Get.to(() => CartScreen()),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -144,6 +144,7 @@ class CustomGrid extends StatelessWidget {
             builder: (cartcart) {
               return Obx(
                 () => ItemCard(
+                  heroTag: 'product_${con.id}',
                   onTap: () {
                     Get.to(ProductDetailsScreen(productModel: con));
                   },
