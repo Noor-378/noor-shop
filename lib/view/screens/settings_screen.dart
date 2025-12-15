@@ -15,190 +15,156 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: contentColor,
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          ProfileWidget(),
-          const SizedBox(
-            height: 10,
-          ),
-          Divider(
-            color: Get.isDarkMode ? Colors.white : Colors.grey,
-            thickness: 2,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomText(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            text: "GENERAL".tr,
-            color: mainColor,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          DarkModeWidget(),
-          const SizedBox(
-            height: 20,
-          ),
-          LanguageWidget(),
-          const SizedBox(
-            height: 20,
-          ),
-          const LogOutWidget(),
-        ],
-      ),
-    );
-  }
-}
-class AnimatedDialog extends StatefulWidget {
-  final VoidCallback onConfirm;
-  final String title;
-  final Widget content;
-  final String onCancelText;
-  final String onConfirmText;
-  final TextStyle? onConfirmTextStyle;
-  final TextStyle? onCancelTextTextStyle;
-  final bool hideCancelButton;
-
-  const AnimatedDialog({
-    super.key,
-    required this.onConfirm,
-    required this.title,
-    required this.content,
-    required this.onCancelText,
-    required this.onConfirmText,
-    this.onConfirmTextStyle,
-    this.onCancelTextTextStyle,
-    this.hideCancelButton = false,
-  });
-
-  @override
-  _AnimatedDialogState createState() => _AnimatedDialogState();
-}
-
-class _AnimatedDialogState extends State<AnimatedDialog>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  bool canClick = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-    _scaleAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: FadeInUp(
-        child: AlertDialog(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          title: Center(
-            child: Text(
-              widget.title,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
-              textAlign: TextAlign.center,
+            ],
+          ),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            title: FadeInDown(
+              duration: const Duration(milliseconds: 500),
+              child: CustomText(
+                text: "SETTINGS".tr,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: mainColor,
+              ),
+            ),
+            leading: FadeInLeft(
+              duration: const Duration(milliseconds: 500),
+              child: Container(
+                margin: const EdgeInsets.only(left: 12, top: 8, bottom: 8),
+                decoration: BoxDecoration(
+                  color: mainColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+                  color: mainColor,
+                  onPressed: () => Get.back(),
+                ),
+              ),
             ),
           ),
-          content: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: widget.content,
-          ),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child:
-                      widget.hideCancelButton
-                          ? Container()
-                          : TextButton(
-                            style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 12,
-                              ),
-                              backgroundColor: Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              widget.onCancelText,
-                              style:
-                                  widget.onCancelTextTextStyle ??
-                                  const TextStyle(
-                                    color: Colors.amber,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FadeInUp(
+              duration: const Duration(milliseconds: 600),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
+                child: ProfileWidget(),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            FadeInUp(
+              duration: const Duration(milliseconds: 700),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5, bottom: 15),
+                child: CustomText(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  text: "GENERAL".tr,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ),
+
+            FadeInUp(
+              duration: const Duration(milliseconds: 800),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 12,
+                        horizontal: 20,
+                        vertical: 15,
                       ),
-                      backgroundColor: Colors.black.withOpacity(0.1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      child: DarkModeWidget(),
+                    ),
+                    Divider(
+                      color: Colors.grey.shade200,
+                      thickness: 1,
+                      height: 1,
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
                       ),
+                      child: LanguageWidget(),
                     ),
-                    onPressed: () {
-                      if (canClick) {
-                        canClick = false;
-                        widget.onConfirm();
-                        Navigator.of(context).pop();
-                        Future.delayed(const Duration(seconds: 1), () {
-                          canClick = true;
-                        });
-                      }
-                    },
-                    child: Text(
-                      widget.onConfirmText,
-                      style:
-                          widget.onConfirmTextStyle ??
-                          const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
+
+            const SizedBox(height: 30),
+
+            FadeInUp(
+              duration: const Duration(milliseconds: 900),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5, bottom: 15),
+                child: CustomText(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  text: "ACCOUNT".tr,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ),
+
+            FadeInUp(
+              duration: const Duration(milliseconds: 1000),
+              child: const LogOutWidget(),
+            ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),

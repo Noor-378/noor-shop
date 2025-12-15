@@ -16,45 +16,44 @@ class DarkModeWidget extends StatelessWidget {
       () => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildIconWidget(),
-          Switch(
-            activeTrackColor:  mainColor,
-            activeColor:  mainColor,
-            value: controller.swithchValue.value,
-            onChanged: (value) {
-              ThemeController().changesTheme();
-              controller.swithchValue.value = value;
-            },
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: darkSettings.withOpacity(0.15),
+                ),
+                child: Icon(
+                  controller.swithchValue.value
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                  color: darkSettings,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 15),
+              CustomText(
+                fontSize: 17,
+                fontWeight: FontWeight.w600,
+                text: "Dark Mode".tr,
+                color: Colors.black87,
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildIconWidget() {
-    return Material(
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: darkSettings,
+          Transform.scale(
+            scale: 0.9,
+            child: Switch(
+              activeTrackColor: mainColor.withOpacity(0.5),
+              activeColor: mainColor,
+              inactiveThumbColor: Colors.grey.shade400,
+              inactiveTrackColor: Colors.grey.shade300,
+              value: controller.swithchValue.value,
+              onChanged: (value) {
+                ThemeController().changesTheme();
+                controller.swithchValue.value = value;
+              },
             ),
-            child: const Icon(
-              Icons.dark_mode,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          CustomText(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            text: "Dark Mode".tr,
-            color:  Colors.black,
           ),
         ],
       ),
