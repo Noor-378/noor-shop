@@ -38,6 +38,7 @@ class AuthController extends GetxController {
 
   String displayUserName = '';
   String displayUserImage = '';
+  String displayUserEmail = '';
 
   @override
   void onInit() {
@@ -107,6 +108,7 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
             displayUserName = name;
+            displayUserEmail = email;
             auth.currentUser!.updateDisplayName(displayUserName);
           });
       final user = FirebaseAuth.instance.currentUser;
@@ -209,6 +211,7 @@ class AuthController extends GetxController {
 
       displayUserName = googleUser.displayName ?? '';
       displayUserImage = googleUser.photoUrl ?? '';
+      displayUserEmail = googleUser.email ?? '';
 
       await auth.signInWithCredential(credential);
       isSignIn = true;
@@ -245,6 +248,7 @@ class AuthController extends GetxController {
 
         displayUserName = facebookModel?.name ?? '';
         displayUserImage = facebookModel?.picture?.url ?? '';
+        displayUserEmail = facebookModel?.email ?? '';
 
         final credential = FacebookAuthProvider.credential(
           loginResult.accessToken!.tokenString,
@@ -330,6 +334,7 @@ class AuthController extends GetxController {
       await FacebookAuth.i.logOut();
       displayUserName = '';
       displayUserImage = '';
+      displayUserEmail = '';
       isSignIn = false;
       authBox.remove("auth");
 

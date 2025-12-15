@@ -8,6 +8,7 @@ import 'package:noor_store/logic/controllers/auth_controller.dart';
 import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/category_controller.dart';
 import 'package:noor_store/logic/controllers/product_controller.dart';
+import 'package:noor_store/logic/controllers/settings_controller.dart';
 import 'package:noor_store/logic/controllers/theme_controller.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/themes/light_theme.dart';
@@ -21,12 +22,12 @@ Future<void> main() async {
   );
   await GetStorage.init();
 
+  runApp(const MyApp());
   Get.put(AuthController());
   Get.put(ProductController());
   Get.put(CartController(), permanent: true);
   Get.put(CategoryController());
-
-  runApp(const MyApp());
+  Get.put(SettingsController());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,11 +1,12 @@
-import 'dart:developer';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noor_store/logic/controllers/auth_controller.dart';
-import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/widgets/custom_text.dart';
+import 'package:noor_store/view/widgets/dark_mode_widget.dart';
+import 'package:noor_store/view/widgets/language_widget.dart';
+import 'package:noor_store/view/widgets/log_out_widget.dart';
+import 'package:noor_store/view/widgets/profile_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -13,59 +14,44 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
-      appBar: AppBar(),
-      body: Column(
+      backgroundColor: contentColor,
+      body: ListView(
+        padding: const EdgeInsets.all(24),
         children: [
-          IconButton(
-            onPressed: () {
-              // Toggle to the opposite mode
-            },
-            icon: Icon(
-              Get.isDarkMode
-                  ? Icons
-                      .wb_sunny_outlined // Show sun when in dark mode
-                  : Icons.dark_mode_outlined, // Show moon when in light mode
-            ),
+          ProfileWidget(),
+          const SizedBox(
+            height: 10,
           ),
-          GetBuilder<AuthController>(
-            builder:
-                (controller) => ElevatedButton.icon(
-                  onPressed: () {
-                    Get.dialog(
-                      AnimatedDialog(
-                        title: "Confirm Logout",
-                        content: const Text(
-                          "Are you sure you want to logout?",
-                          textAlign: TextAlign.center,
-                        ),
-                        onCancelText: "Cancel",
-                        onConfirmText: "Logout",
-                        onConfirm: () async {
-                          controller.signOutFromApp();
-                        },
-                        onConfirmTextStyle: TextStyle(
-                          color: mainColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        onCancelTextTextStyle: TextStyle(
-                          color: scaffoldDarkColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      barrierDismissible: true,
-                    );
-                  },
-
-                  label: const Text("Logout"),
-                ),
+          Divider(
+            color: Get.isDarkMode ? Colors.white : Colors.grey,
+            thickness: 2,
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomText(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            text: "GENERAL".tr,
+            color: mainColor,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          DarkModeWidget(),
+          const SizedBox(
+            height: 20,
+          ),
+          LanguageWidget(),
+          const SizedBox(
+            height: 20,
+          ),
+          const LogOutWidget(),
         ],
       ),
     );
   }
 }
-
 class AnimatedDialog extends StatefulWidget {
   final VoidCallback onConfirm;
   final String title;
