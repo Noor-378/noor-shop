@@ -5,6 +5,7 @@ import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/logic/controllers/settings_controller.dart';
 import 'package:noor_store/routes/routes.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/widgets/profile_widget.dart';
 
 class DrawerContent extends StatelessWidget {
   DrawerContent({super.key, required this.advancedDrawer});
@@ -68,11 +69,23 @@ class DrawerContent extends StatelessWidget {
                           shape: BoxShape.circle,
                           color: Colors.white,
                         ),
-                        child: CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.grey.shade300,
-                          backgroundImage: NetworkImage(
-                            settingsController.userImage,
+                        child: GestureDetector(
+                          onTap:
+                              () => Get.to(
+                                () => ProfileImageView(
+                                  imageUrl: settingsController.userImage,
+                                ),
+                              ),
+
+                          child: Hero(
+                            tag: 'profile-image-hero',
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundColor: Colors.grey.shade300,
+                              backgroundImage: NetworkImage(
+                                settingsController.userImage,
+                              ),
+                            ),
                           ),
                         ),
                       ),
