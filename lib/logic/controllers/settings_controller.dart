@@ -6,6 +6,9 @@ class SettingsController extends GetxController {
   var swithchValue = false.obs;
   var storage = GetStorage();
   var langLocal = ene;
+  var userName = "";
+  var userImage = "";
+  var userEmail = "";
 
   String capitalize(String profileName) {
     return profileName.split(" ").map((name) => name.capitalize).join(" ");
@@ -17,6 +20,9 @@ class SettingsController extends GetxController {
   void onInit() async {
     super.onInit();
 
+    userName = await storage.read("user_name");
+    userEmail = await storage.read("user_email");
+    userImage = await storage.read("user_image");
     langLocal = await getLanguage;
   }
 

@@ -6,7 +6,7 @@ import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class ProfileWidget extends StatelessWidget {
-  ProfileWidget({Key? key}) : super(key: key);
+  ProfileWidget({super.key});
 
   final controller = Get.find<SettingsController>();
   final authController = Get.find<AuthController>();
@@ -40,7 +40,7 @@ class ProfileWidget extends StatelessWidget {
               color: Colors.white,
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: NetworkImage(authController.displayUserImage),
+                image: NetworkImage(controller.userImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -54,14 +54,14 @@ class ProfileWidget extends StatelessWidget {
               CustomText(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                text: controller.capitalize(authController.displayUserName),
+                text: controller.capitalize(controller.userName),
                 color: Colors.black87,
               ),
               const SizedBox(height: 5),
               CustomText(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                text: authController.displayUserEmail,
+                text: controller.userEmail,
                 color: Colors.grey.shade600,
               ),
             ],

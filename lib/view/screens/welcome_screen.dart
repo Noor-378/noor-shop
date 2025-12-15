@@ -110,9 +110,7 @@ class WelcomeScreen extends StatelessWidget {
                                 child: CustomTextButton(
                                   text: "Skip",
                                   onPressed: () {
-                                    controller.pageController.jumpToPage(
-                                      welcomeContent.length - 1,
-                                    );
+                                    Get.offNamed(Routes.loginScreen);
                                   },
                                 ),
                               ),

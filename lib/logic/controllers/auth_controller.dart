@@ -114,6 +114,9 @@ class AuthController extends GetxController {
       final user = FirebaseAuth.instance.currentUser;
       isSignIn = true;
       authBox.write("auth", isSignIn);
+      authBox.write("user_name", name);
+      authBox.write("user_email", email);
+      authBox.write("user_image", user?.photoURL ?? "");
 
       Get.offNamed(Routes.loginScreen);
       user!.sendEmailVerification();
@@ -158,6 +161,7 @@ class AuthController extends GetxController {
       }
       isSignIn = true;
       authBox.write("auth", isSignIn);
+      authBox.write("user_email", email);
 
       Get.offAllNamed(Routes.mainScreen);
       customGetSnackbar(
@@ -216,6 +220,9 @@ class AuthController extends GetxController {
       await auth.signInWithCredential(credential);
       isSignIn = true;
       authBox.write("auth", isSignIn);
+      authBox.write("user_name", displayUserName);
+      authBox.write("user_email", displayUserEmail);
+      authBox.write("user_image", displayUserImage);
 
       Get.offAllNamed(Routes.mainScreen);
       customGetSnackbar(
@@ -249,6 +256,12 @@ class AuthController extends GetxController {
         displayUserName = facebookModel?.name ?? '';
         displayUserImage = facebookModel?.picture?.url ?? '';
         displayUserEmail = facebookModel?.email ?? '';
+
+        isSignIn = true;
+        authBox.write("auth", isSignIn);
+        authBox.write("user_name", displayUserName);
+        authBox.write("user_email", displayUserEmail);
+        authBox.write("user_email", displayUserImage ?? "");
 
         final credential = FacebookAuthProvider.credential(
           loginResult.accessToken!.tokenString,
@@ -337,6 +350,9 @@ class AuthController extends GetxController {
       displayUserEmail = '';
       isSignIn = false;
       authBox.remove("auth");
+      authBox.remove("user_name");
+      authBox.remove("user_email");
+      authBox.remove("user_image");
 
       Get.offAllNamed(Routes.loginScreen);
 
