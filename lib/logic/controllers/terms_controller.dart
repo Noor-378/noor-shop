@@ -6,7 +6,7 @@ import 'package:page_flip/page_flip.dart';
 class TermsController extends GetxController {
   final flipController = GlobalKey<PageFlipWidgetState>();
   var currentPage = 0.obs;
-  final int itemCount = 5;
+  final int itemCount = 2;
 
   var showIndicator = true.obs;
 
@@ -22,7 +22,9 @@ class TermsController extends GetxController {
   void _showIndicatorWithTimeout(Duration duration) {
     showIndicator.value = true;
 
-    Future.delayed(const Duration(seconds: 3), () => showIndicator.value = false);
+    Future.delayed(
+      const Duration(seconds: 3),
+      () => showIndicator.value = false,
+    );
   }
-
 }
