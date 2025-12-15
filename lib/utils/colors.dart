@@ -13,7 +13,6 @@ Color headerWidgetColor = Colors.blue.shade300;
 // ignore: non_constant_identifier_names
 Color SecondHeaderWidgetColor = Colors.blueAccent;
 
-
 const Color kCOlor1 = Color(0xff685959);
 const Color kCOlor2 = Color(0xffADA79B);
 const Color kCOlor3 = Color(0xffA5947F);

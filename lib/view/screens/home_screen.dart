@@ -7,12 +7,10 @@ import 'package:noor_store/logic/controllers/product_controller.dart';
 import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/screens/product_details_screen.dart';
-import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:noor_store/view/widgets/item_card.dart';
 import 'package:noor_store/view/widgets/list_item_card.dart';
 import 'dart:math';
-
 import 'package:redacted/redacted.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -132,11 +130,15 @@ class CustomGrid extends StatelessWidget {
     required this.controller,
     required this.products,
     required this.randomNumber,
+    this.padding,
+    this.physics = const NeverScrollableScrollPhysics(),
   });
 
   final ProductController controller;
   final List<ProductModel> products;
   final Random randomNumber;
+  final ScrollPhysics physics;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +152,9 @@ class CustomGrid extends StatelessWidget {
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       itemCount: products.length,
+      padding: padding,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: physics,
       itemBuilder: (context, index) {
         final con = products[index];
         final height = 200 + random.nextInt(150);
@@ -192,44 +195,6 @@ class CustomGrid extends StatelessWidget {
   }
 }
 
-////////////////////////////////////////////////////////////////////////
-// GridView.builder(
-//       physics:
-//           const NeverScrollableScrollPhysics(), // 🧠 disables inner scrolling
-//       shrinkWrap:
-//           true, // 🧠 allows GridView to take only as much height as needed
-//       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-
-//         crossAxisCount:
-//             2, // 🟩 Number of items per row (2 items horizontally)
-//         crossAxisSpacing:
-//             10, // 🟨 Horizontal space between columns (10 pixels)
-//         mainAxisSpacing: 20, // 🟦 Vertical space between rows (20 pixels)
-//         childAspectRatio:
-//             2.9 /
-//             4, // 🟥 Width / Height ratio of each item (makes items taller than wide)
-//       ),
-//       itemCount: 10,
-//       itemBuilder:
-//           (context, index) => const ItemCard(),
-//     );
-
-// GridView.builder(
-//       physics:
-//           const NeverScrollableScrollPhysics(), // 🧠 disables inner scrolling
-//       shrinkWrap:
-//           true, // 🧠 allows GridView to take only as much height as needed
-
-//       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-//         maxCrossAxisExtent: 200, // width of each tile
-//         crossAxisSpacing: 10,
-//         mainAxisSpacing: 20,
-//       ),
-//       itemCount: 10,
-//       itemBuilder:
-//           (context, index) => ItemCard(height: index.isEven ? 100 : 150),
-//     );
-////////////////////////////////////////////////////////////////////////
 class ShoeWidget extends StatelessWidget {
   const ShoeWidget({super.key});
 
@@ -274,12 +239,9 @@ class ShoeWidget extends StatelessWidget {
                             BoxShadow(
                               // ignore: deprecated_member_use
                               color: Colors.black.withOpacity(.02),
-                              offset: const Offset(
-                                0,
-                                10,
-                              ), // Pushes it straight down
-                              blurRadius: 8, // Smooth shadow
-                              spreadRadius: 0, // No sideways growth
+                              offset: const Offset(0, 10),
+                              blurRadius: 8,
+                              spreadRadius: 0,
                             ),
                           ],
                           // shape: BoxShape.circle,
@@ -300,14 +262,6 @@ class ShoeWidget extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 18),
-                              // ClipRRect(
-                              //   borderRadius: BorderRadius.circular(19),
-                              //   child: Image.network(
-                              //     fit: BoxFit.cover,
-                              //     height: 150,
-                              //     "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
-                              //   ).redacted(context: context, redact: true),
-                              // ),
                               Container(
                                 height: 140,
                                 color: Colors.blue,
@@ -358,96 +312,3 @@ class ShoeWidget extends StatelessWidget {
     );
   }
 }
-
-// ItemCard(
-//   height: 500,
-//   image:
-//       "https://images.unsplash.com/photo-1750975200813-8018392a588e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
-//   price: "5",
-// ),
-
-// class HorizontalProductCarousel extends StatelessWidget {
-//   final TabController tabController;
-//   final List<ProductModel> products;
-
-//   const HorizontalProductCarousel({
-//     super.key,
-//     required this.tabController,
-//     required this.products,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LocalHeroViews(
-//       tabController: tabController,
-//       textDirection: TextDirection.ltr,
-//       itemCount: products.length,
-//       onPressedCard: (index) {
-//         // What happens when user taps card at position `index`
-//         print('Card $index pressed');
-//         // For example, navigate to detail screen:
-//         // Navigator.of(context).push(...);
-//       },
-//       itemsModel: (index) {
-//         final product = products[index];
-//         return ItemsModel(
-//           name: Text(
-//             product.title ?? "s",
-//             style: const TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//           title: Text(
-//             product.price.toString() ?? "s",
-//             style: const TextStyle(color: Colors.green),
-//           ),
-//           subTitle: const SizedBox.shrink(), // add subtitle if you want
-//           favoriteIconButton: IconButton(
-//             icon: const Icon(Icons.favorite_border),
-//             onPressed: () {
-//               // your favorite logic here
-//             },
-//           ),
-//           subTitleIcon: const Icon(Icons.shopping_cart, size: 14),
-//           image: DecorationImage(
-//             image: NetworkImage(product.image!),
-//             fit: BoxFit.cover,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatelessWidget {
-//   final TabController tabController;
-//   final List<ProductModel> itemsMode; // Your model
-
-//   MyHomePage({required this.tabController, required this.itemsMode});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LocalHeroViews(
-//       tabController: tabController,
-//       textDirection: TextDirection.ltr,
-//       itemCount: itemsMode.length,
-//       itemsModel:
-//           (index) => ItemsModel(
-//             name: Text(itemsMode[index].rating.toString()),
-//             title: Text(itemsMode[index].title!),
-//             subTitle: Text(itemsMode[index].price.toString()),
-//             favoriteIconButton: IconButton(
-//               onPressed: () {},
-//               icon: Icon(Icons.add),
-//             ),
-//             subTitleIcon: const Icon(
-//               Icons.location_on_outlined,
-//               color: Color(0xFF95979A),
-//               size: 10,
-//             ),
-//             image: DecorationImage(
-//               image: NetworkImage(itemsMode[index].image!),
-//             ),
-//           ),
-//       onPressedCard: (int index) {},
-//     );
-//   }
-// }

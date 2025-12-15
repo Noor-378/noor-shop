@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/category_controller.dart';
@@ -7,6 +10,7 @@ import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/screens/product_details_screen.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
+import 'package:noor_store/view/widgets/item_card.dart';
 
 class CategoryItems extends StatelessWidget {
   final String catehoryTitle;
@@ -21,6 +25,7 @@ class CategoryItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: contentColor,
       appBar: AppBar(
         title: Text(catehoryTitle),
         centerTitle: true,
@@ -30,28 +35,41 @@ class CategoryItems extends StatelessWidget {
         if (categoryController.isAllCategory.value) {
           return Center(child: CircularProgressIndicator(color: mainColor));
         } else {
-          return GridView.builder(
+          return MasonryGridView.builder(
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(top: 20),
             itemCount: categoryController.categoryList.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              childAspectRatio: 0.8,
-              mainAxisSpacing: 9.0,
-              crossAxisSpacing: 6.0,
-              maxCrossAxisExtent: 200,
+            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
             ),
             itemBuilder: (context, index) {
-              return buildCardItems(
-                image: categoryController.categoryList[index].image ?? "",
-                price: categoryController.categoryList[index].price ?? 0,
-                rate: categoryController.categoryList[index].rating?.rate ?? 0,
-                productId: categoryController.categoryList[index].id ?? 0,
-                productModel: categoryController.categoryList[index],
-                onTap: () {
-                  Get.to(
-                    () => ProductDetailsScreen(
-                      productModel: categoryController.categoryList[index],
-                    ),
-                  );
+              Random random = Random();
+              final height = 250 + random.nextInt(100);
+              final product = categoryController.categoryList[index];
+
+              return ItemCard(
+                rate: product.rating?.rate,
+                height: height.toDouble(),
+                image: product.image ?? "",
+                title: product.title ?? "",
+                price: product.price?.toString() ?? "",
+                isLiked: controller.isFavorites(product.id ?? 0),
+                addToChartOnTap: (p0) async {
+                  cartController.addProductToCart(product);
+                  return !p0;
                 },
+                addToFavOnTap: (p0) async {
+                  controller.manageFavorites(product.id ?? 0);
+                  return !p0;
+                },
+                isLikedForCart: cartController.isInCart(product),
+                onTap: () {
+                  Get.to(() => ProductDetailsScreen(productModel: product));
+                },
+                heroTag: 'product_${product.id}',
               );
             },
           );
