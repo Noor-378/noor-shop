@@ -5,6 +5,7 @@ import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/screens/check_out_screen.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class CartScreen extends StatelessWidget {
@@ -77,7 +78,9 @@ class CartScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to( CheckOutScreen());
+                            },
                             icon: const Icon(Icons.shopping_cart_checkout),
                             label: CustomText(
                               text: "Check Out",

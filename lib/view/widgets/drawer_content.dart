@@ -73,12 +73,13 @@ class DrawerContent extends StatelessWidget {
                           onTap:
                               () => Get.to(
                                 () => ProfileImageView(
+                                  heroTag: 'profile-image-hero-drawer',
                                   imageUrl: settingsController.userImage,
                                 ),
                               ),
 
                           child: Hero(
-                            tag: 'profile-image-hero',
+                            tag: 'profile-image-hero-drawer',
                             child: CircleAvatar(
                               radius: 35,
                               backgroundColor: Colors.grey.shade300,

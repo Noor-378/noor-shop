@@ -81,8 +81,13 @@ class ProfileWidget extends StatelessWidget {
 
 class ProfileImageView extends StatelessWidget {
   final String imageUrl;
+  final String heroTag;
 
-  const ProfileImageView({super.key, required this.imageUrl});
+  const ProfileImageView({
+    super.key,
+    required this.imageUrl,
+    this.heroTag = "profile-image-hero",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +104,7 @@ class ProfileImageView extends StatelessWidget {
       ),
       body: Center(
         child: Hero(
-          tag: 'profile-image-hero',
+          tag: heroTag,
           child: PhotoView(
             imageProvider: NetworkImage(imageUrl),
             backgroundDecoration: const BoxDecoration(
