@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/logic/controllers/check_out_controller.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/screens/pick_location_screen.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class CheckOutScreen extends StatelessWidget {
@@ -90,6 +91,7 @@ class CheckOutScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 15),
 
                 FadeInUpBig(
@@ -122,6 +124,31 @@ class CheckOutScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 15),
+
+                FadeInUpBig(
+                  from: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextFormField(
+                      readOnly: true,
+                      onTap: checkOutController.pickLocation,
+                      showCursor: false,
+                      keyboardType: TextInputType.none,
+                      controller: checkOutController.locationController,
+                      decoration: _cardInputDecoration(
+                        hint: 'Enter Your Location...',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your location';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 20),
 
                 FadeInUpBig(
@@ -181,13 +208,11 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  InputDecoration _cardInputDecoration({
-    required String label,
-    required String hint,
-  }) {
+  InputDecoration _cardInputDecoration({String? label, required String hint}) {
     return InputDecoration(
       labelText: label,
       hintText: hint,
+      hintStyle: const TextStyle(fontSize: 15),
       labelStyle: TextStyle(color: blackColor),
       filled: true,
       fillColor: whiteColor,

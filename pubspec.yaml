@@ -37,6 +37,11 @@ dependencies:
   get_storage:
   flutter_credit_card: ^4.1.0
   photo_view: ^0.15.0
+  google_maps_flutter: ^2.14.0
+  geolocator: ^14.0.2 # to take the current location for the user 
+  latlong2: ^0.9.1
+  flutter_map: ^8.2.2
+  geocoding: ^4.0.0 # to take the names for the streets from the map
 
 
 

@@ -50,6 +50,10 @@ android/app/google-services.json
 # Android local config (only if contains secrets)
 android/app/src/main/res/values/strings.xml
 
+# Android Manifest (ignore if it contains API keys / secrets)
+android/app/src/main/AndroidManifest.xml
+
+
 # Local tools
 sdkmanager
 sdkmanager/
