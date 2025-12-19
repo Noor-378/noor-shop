@@ -83,74 +83,85 @@ class SignupScreen extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 20),
-                                    CustomTextFormField(
-                                      controller:
-                                          controller.singupUserNameController,
-                                      labelText: "User Name",
-                                      hintText: "Enter your Name",
-                                      prefixIcon: const Icon(
-                                        Icons.person_outline,
-                                      ),
-                                      validator: (value) {
-                                        if ((value ?? "").length <= 2 ||
-                                            !RegExp(
-                                              validationName,
-                                            ).hasMatch(value!)) {
-                                          return "Enter valid name please";
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.next,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    CustomTextFormField(
-                                      controller:
-                                          controller.singupEmailController,
-                                      labelText: "Email",
-                                      hintText: "Enter your email",
-                                      prefixIcon: const Icon(
-                                        Icons.email_outlined,
-                                      ),
-                                      validator: (value) {
-                                        if (!RegExp(
-                                          validationEmail,
-                                        ).hasMatch(value ?? "")) {
-                                          return "Enter valid email please";
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.next,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    CustomTextFormField(
-                                      controller:
-                                          controller.singupPasswordController,
-                                      labelText: "Password",
-                                      hintText: "Enter your password",
-                                      prefixIcon: const Icon(
-                                        Icons.lock_outline,
-                                      ),
-                                      obscureText: controller.obscureText,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          controller.obscureText
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
+                                    FadeInLeftBig(
+                                      from: 100,
+                                      child: CustomTextFormField(
+                                        controller:
+                                            controller.singupUserNameController,
+                                        labelText: "User Name",
+                                        hintText: "Enter your Name",
+                                        prefixIcon: const Icon(
+                                          Icons.person_outline,
                                         ),
-                                        onPressed: controller.toggleObscureText,
+                                        validator: (value) {
+                                          if ((value ?? "").length <= 2 ||
+                                              !RegExp(
+                                                validationName,
+                                              ).hasMatch(value!)) {
+                                            return "Enter valid name please";
+                                          }
+                                          return null;
+                                        },
+                                        textInputAction: TextInputAction.next,
                                       ),
-                                      validator: (value) {
-                                        if ((value ?? "").length <= 6) {
-                                          return "Password should be longer than 6 characters";
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.done,
-                                      onFieldSubmitted: (value) {
-                                        if (formKey.currentState!.validate()) {
-                                          controller.signupUsingFirebase();
-                                        }
-                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    FadeInRightBig(
+                                      from: 100,
+                                      child: CustomTextFormField(
+                                        controller:
+                                            controller.singupEmailController,
+                                        labelText: "Email",
+                                        hintText: "Enter your email",
+                                        prefixIcon: const Icon(
+                                          Icons.email_outlined,
+                                        ),
+                                        validator: (value) {
+                                          if (!RegExp(
+                                            validationEmail,
+                                          ).hasMatch(value ?? "")) {
+                                            return "Enter valid email please";
+                                          }
+                                          return null;
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    FadeInLeftBig(
+                                      from: 100,
+                                      child: CustomTextFormField(
+                                        controller:
+                                            controller.singupPasswordController,
+                                        labelText: "Password",
+                                        hintText: "Enter your password",
+                                        prefixIcon: const Icon(
+                                          Icons.lock_outline,
+                                        ),
+                                        obscureText: controller.obscureText,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            controller.obscureText
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                          ),
+                                          onPressed:
+                                              controller.toggleObscureText,
+                                        ),
+                                        validator: (value) {
+                                          if ((value ?? "").length <= 6) {
+                                            return "Password should be longer than 6 characters";
+                                          }
+                                          return null;
+                                        },
+                                        textInputAction: TextInputAction.done,
+                                        onFieldSubmitted: (value) {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            controller.signupUsingFirebase();
+                                          }
+                                        },
+                                      ),
                                     ),
                                     const SizedBox(height: 20),
                                     controller.singupMainButton
