@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noor_store/logic/controllers/cart_controller.dart';
+import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/screens/cart_screen.dart';
 import 'package:noor_store/view/widgets/color_picker.dart';
@@ -12,8 +13,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class ImageSliders extends StatefulWidget {
   final String imageUrl;
   final String productId;
+  final String heroTag;
   const ImageSliders({
     required this.imageUrl,
+    required this.heroTag,
     super.key,
     required this.productId,
   });
@@ -27,6 +30,7 @@ class _ImageSlidersState extends State<ImageSliders>
   final CarouselSliderController _carouselController =
       CarouselSliderController();
   final cartController = Get.find<CartController>();
+  final mainController = Get.find<MainController>();
 
   Timer? _autoPlayTimer;
 
@@ -123,7 +127,7 @@ class _ImageSlidersState extends State<ImageSliders>
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Hero(
-                        tag: 'product_${widget.productId}',
+                        tag: widget.heroTag,
                         child: Image.network(
                           widget.imageUrl,
                           fit: BoxFit.contain,
@@ -269,7 +273,10 @@ class _ImageSlidersState extends State<ImageSliders>
                       ),
                       _buildNavButton(
                         icon: Icons.shopping_cart_outlined,
-                        onTap: () => Get.to(() => CartScreen()),
+                        onTap: () {
+                          Get.back();
+                          mainController.changeIndex(3);
+                        },
                       ),
                     ],
                   ),

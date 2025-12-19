@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/logic/controllers/product_controller.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/screens/product_details_screen.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 import 'package:noor_store/view/widgets/list_item_card.dart';
 
@@ -172,15 +173,26 @@ class FavoritesScreen extends StatelessWidget {
         return FadeInLeftBig(
           from: index == 0 ? 25 : index * 50,
           child: ListItemCard(
-            addToCartOnTap: (p0) async {
-              return !p0;
-            },
+            heroTag: "prodint_${index}_favorites",
+
+            onTap:
+                () => Get.to(
+                  () => ProductDetailsScreen(
+                    productModel: controller.favoritesList[index],
+                    heroTag: "prodint_${index}_favorites",
+                  ),
+                ),
             addToFavOnTap: (p0) async {
               controller.manageFavorites(productId);
               return !p0;
             },
             product: controller.favoritesList[index],
             isLiked: controller.isFavorites(productId),
+
+            addToCartOnTap: (p0) async {
+              return !p0;
+            },
+            isLikedCart: true,
           ),
         );
       },

@@ -6,17 +6,11 @@ class CartController extends GetxController {
 
   void addProductToCart(ProductModel productModel) {
     if (productMap.containsKey(productModel)) {
-      productMap[productModel] += 1;
-      productMap.entries
-          .map((e) => e.key.price * e.value)
-          .toList()
-          .reduce((value, element) => value + element)
-          .toStringAsFixed(2);
-      update();
+      productMap.remove(productModel);
     } else {
       productMap[productModel] = 1;
-      update();
     }
+    update();
   }
 
   bool isInCart(ProductModel product) {

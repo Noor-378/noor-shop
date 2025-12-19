@@ -1,8 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noor_store/logic/controllers/cart_controller.dart';
 import 'package:noor_store/logic/controllers/product_controller.dart';
+import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
+import 'package:noor_store/view/screens/product_details_screen.dart';
 import 'package:noor_store/view/widgets/custom_add_to_cart_button.dart';
 import 'package:noor_store/view/widgets/custom_favorite_button.dart';
 import 'package:noor_store/view/widgets/custom_snackbar.dart';
@@ -28,7 +31,6 @@ class HeaderWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Keep padding for header text
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: CustomText(text: "Just for You", fontSize: 18),
@@ -75,13 +77,25 @@ class ListOfCards extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemBuilder: (context, index) {
+          final item = controller.productModel[index];
           return JustForYouCard(
-            title: controller.productModel[index].title ?? "Null Title",
+            productModel: item,
+            productId: item.id ?? 0,
+            controller: controller,
+            onTap:
+                () => Get.to(
+                  ProductDetailsScreen(
+                    productModel: item,
+                    heroTag: "product_${item.id}_from_head",
+                  ),
+                ),
+            heroTag: "product_${item.id}_from_head",
+            title: item.title ?? "Null Title",
             image:
-                controller.productModel[index].image ??
+                item.image ??
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhCoPMSIngXopV7FgaNKeFGYZRPxh6edPcMw&s",
-            price: controller.productModel[index].price ?? 0,
-            rate: controller.productModel[index].rating!.rate ?? 0,
+            price: item.price ?? 0,
+            rate: item.rating!.rate ?? 0,
           );
         },
         itemCount: controller.productModel.length,
@@ -97,163 +111,178 @@ class JustForYouCard extends StatelessWidget {
     required this.image,
     required this.title,
     required this.price,
+    required this.heroTag,
+    required this.onTap,
+    required this.controller,
+    required this.productModel,
+    required this.productId,
     this.rate,
   });
 
   final String image;
+  final int productId;
   final String title;
+  final ProductModel productModel;
   final double price;
   final double? rate;
-
+  final String heroTag;
+  final ProductController controller;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 175,
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(25),
-          bottomLeft: Radius.circular(25),
-          bottomRight: Radius.circular(5),
-          topLeft: Radius.circular(5),
-        ),
-        boxShadow: [
-          BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(.02),
-            offset: const Offset(0, 10),
-            blurRadius: 8,
-            spreadRadius: 0,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 100,
+        width: 175,
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(25),
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(5),
+            topLeft: Radius.circular(5),
           ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomFavoriteButton(
-                  isLiked: false,
-                  onTap: (bool isLiked) async {
-                    isLiked
-                        ? customGetSnackbar(
-                          title: "false",
-                          messageText: "false",
-                        )
-                        : customGetSnackbar(title: "true", messageText: "true");
-                    return !isLiked;
-                  },
-                ),
-                CustomAddToCartButton(
-                  isLiked: false,
-                  onTap: (bool isLiked) async {
-                    isLiked
-                        ? customGetSnackbar(
-                          title: "false",
-                          messageText: "false",
-                        )
-                        : customGetSnackbar(title: "true", messageText: "true");
-                    // You can add your logic here (API call, GetX update, etc.)
-                    return !isLiked;
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(19),
-              child: Image.network(
-                image,
-                fit: BoxFit.contain,
-                height: 112,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Container(
-                    height: 112,
-                    width: 112,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.amber,
-                    ),
-                  ).redacted(context: context, redact: true);
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    height: 112,
-                    color: Colors.grey.shade200,
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.broken_image, color: Colors.grey),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 15),
-            CustomText(
-              text: title,
-              fontSize: 14,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              color: blackColor,
-              fontWeight: FontWeight.w800,
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SingleStarRating(
-                      rate: rate ?? 0,
-                      size: 30,
-                      max: 5,
-                    ), // fill is 50%
-                    const SizedBox(width: 8),
-                    CustomText(
-                      text: rate.toString(),
-                      fontSize: 12,
-                      color: blackColor,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ],
-                ),
-
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(2.5),
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade100,
-                        borderRadius: BorderRadius.circular(2.5),
-                      ),
-                      child: CustomText(
-                        // ideia* to make it like gample :)
-                        // if the user press on the price, become lower
-                        text: "$price \$",
-
-                        decoration: TextDecoration.lineThrough,
-                        fontSize: 12,
-                        color: const Color.fromARGB(255, 255, 17, 0),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    CustomText(
-                      // ideia* to make it like gample :)
-                      // if the user press on the price, become lower
-                      text: "${(price / 2)} \$",
-                      fontSize: 14,
-                      color: blackColor,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ],
-                ),
-              ],
+          boxShadow: [
+            BoxShadow(
+              // ignore: deprecated_member_use
+              color: Colors.black.withOpacity(.02),
+              offset: const Offset(0, 10),
+              blurRadius: 8,
+              spreadRadius: 0,
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(() {
+                    final isFav = controller.isFavorites(productId);
+                    return CustomFavoriteButton(
+                      isLiked: isFav,
+                      onTap: (bool isLiked) async {
+                        controller.manageFavorites(productId);
+
+                        return !isLiked;
+                      },
+                    );
+                  }),
+                  GetBuilder<CartController>(
+                    builder:
+                        (controller) => CustomAddToCartButton(
+                          isLiked: controller.isInCart(productModel),
+                          onTap: (bool isLiked) async {
+                            controller.addProductToCart(productModel);
+
+                            return !isLiked;
+                          },
+                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Hero(
+                tag: heroTag,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(19),
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.contain,
+                    height: 112,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        height: 112,
+                        width: 112,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.amber,
+                        ),
+                      ).redacted(context: context, redact: true);
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 112,
+                        color: Colors.grey.shade200,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.broken_image,
+                          color: Colors.grey,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              CustomText(
+                text: title,
+                fontSize: 14,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                color: blackColor,
+                fontWeight: FontWeight.w800,
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      SingleStarRating(
+                        rate: rate ?? 0,
+                        size: 30,
+                        max: 5,
+                      ), // fill is 50%
+                      const SizedBox(width: 8),
+                      CustomText(
+                        text: rate.toString(),
+                        fontSize: 12,
+                        color: blackColor,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+
+                  Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(2.5),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade100,
+                          borderRadius: BorderRadius.circular(2.5),
+                        ),
+                        child: CustomText(
+                          // ideia* to make it like gample :)
+                          // if the user press on the price, become lower
+                          text: "$price \$",
+
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 12,
+                          color: const Color.fromARGB(255, 255, 17, 0),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      CustomText(
+                        // ideia* to make it like gample :)
+                        // if the user press on the price, become lower
+                        text: "${(price / 2)} \$",
+                        fontSize: 14,
+                        color: blackColor,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -67,7 +67,12 @@ class CategoryItems extends StatelessWidget {
                 },
                 isLikedForCart: cartController.isInCart(product),
                 onTap: () {
-                  Get.to(() => ProductDetailsScreen(productModel: product));
+                  Get.to(
+                    () => ProductDetailsScreen(
+                      productModel: product,
+                      heroTag: "product_${product.id}",
+                    ),
+                  );
                 },
                 heroTag: 'product_${product.id}',
               );

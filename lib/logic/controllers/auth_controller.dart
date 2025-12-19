@@ -23,7 +23,7 @@ class AuthController extends GetxController {
   // Common States
   bool obscureText = true;
   bool obscureEye = false;
-  bool keepMeLogin = true;
+  bool keepMeLogin = false;
   bool loginMainButton = false;
   bool singupMainButton = false;
   bool forgetPasswordMainButton = false;

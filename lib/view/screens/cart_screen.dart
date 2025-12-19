@@ -6,6 +6,7 @@ import 'package:noor_store/logic/controllers/main_controller.dart';
 import 'package:noor_store/model/product_model.dart';
 import 'package:noor_store/utils/colors.dart';
 import 'package:noor_store/view/screens/check_out_screen.dart';
+import 'package:noor_store/view/screens/product_details_screen.dart';
 import 'package:noor_store/view/widgets/custom_text.dart';
 
 class CartScreen extends StatelessWidget {
@@ -79,7 +80,7 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Get.to( CheckOutScreen());
+                              Get.to(CheckOutScreen());
                             },
                             icon: const Icon(Icons.shopping_cart_checkout),
                             label: CustomText(
@@ -258,6 +259,14 @@ class CartListOfCard extends StatelessWidget {
         return FadeInLeftBig(
           from: index == 0 ? 25 : index * 50,
           child: CartCartCart(
+            heroTag: "product_$index",
+            onTap:
+                () => Get.to(
+                  ProductDetailsScreen(
+                    productModel: product,
+                    heroTag: "product_$index",
+                  ),
+                ),
             product: product,
             quantity: quantity,
             onAdd: () => controller.addProductToCart(product),
@@ -278,6 +287,8 @@ class CartCartCart extends StatelessWidget {
     required this.onAdd,
     required this.onRemove,
     required this.onDelete,
+    required this.heroTag,
+    required this.onTap,
   });
 
   final ProductModel product;
@@ -285,107 +296,121 @@ class CartCartCart extends StatelessWidget {
   final VoidCallback onAdd;
   final VoidCallback onRemove;
   final VoidCallback onDelete;
+  final String heroTag;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 130,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.05),
-            blurRadius: 8,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              product.image ?? '',
-              height: 110,
-              width: 110,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 130,
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.05),
+              blurRadius: 8,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Hero(
+              tag: heroTag,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  product.image ?? '',
                   height: 110,
                   width: 110,
-                  color: Colors.grey.shade200,
-                  alignment: Alignment.center,
-                  child: const Icon(Icons.broken_image, color: Colors.grey),
-                );
-              },
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 110,
+                      width: 110,
+                      color: Colors.grey.shade200,
+                      alignment: Alignment.center,
+                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
 
-          const SizedBox(width: 12),
+            const SizedBox(width: 12),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  text: product.title ?? '',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: blackColor,
-                ),
-                const SizedBox(height: 6),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    text: product.title ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: blackColor,
+                  ),
+                  const SizedBox(height: 6),
 
-                CustomText(
-                  text: "\$${product.price?.toStringAsFixed(2)}",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: blackColor,
-                ),
+                  CustomText(
+                    text: "\$${product.price?.toStringAsFixed(2)}",
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: blackColor,
+                  ),
 
-                const Spacer(),
+                  const Spacer(),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Quantity Controls
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: onRemove,
-                          icon: const Icon(
-                            Icons.remove_circle_outline,
-                            size: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Quantity Controls
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: onRemove,
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              size: 20,
+                            ),
                           ),
-                        ),
-                        Text(
-                          quantity.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                          Text(
+                            quantity.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: onAdd,
-                          icon: const Icon(Icons.add_circle_outline, size: 20),
-                        ),
-                      ],
-                    ),
+                          IconButton(
+                            onPressed: onAdd,
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                    IconButton(
-                      onPressed: onDelete,
-                      icon: const Icon(Icons.delete_outline, color: Colors.red),
-                    ),
-                  ],
-                ),
-              ],
+                      IconButton(
+                        onPressed: onDelete,
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

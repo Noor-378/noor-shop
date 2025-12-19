@@ -8,7 +8,12 @@ import 'package:noor_store/view/widgets/size_list.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel productModel;
-  const ProductDetailsScreen({required this.productModel, super.key});
+  final String heroTag;
+  const ProductDetailsScreen({
+    required this.productModel,
+    required this.heroTag,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ImageSliders(
+                    heroTag: heroTag,
                     imageUrl: productModel.image ?? "",
                     productId: productModel.id.toString(),
                   ),

@@ -17,6 +17,7 @@ import 'package:redacted/redacted.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final controller = Get.find<ProductController>();
+  final cartController = Get.find<CartController>();
   Random randomNumber = Random();
 
   @override
@@ -102,9 +103,19 @@ class HomeScreen extends StatelessWidget {
                           return FadeInLeftBig(
                             from: index == 0 ? 25 : index * 50,
                             child: ListItemCard(
+                              heroTag: "product_$index",
+                              onTap:
+                                  () => Get.to(
+                                    () => ProductDetailsScreen(
+                                      productModel: product,
+                                      heroTag: "product_$index",
+                                    ),
+                                  ),
                               addToCartOnTap: (p0) async {
-                                return false;
+                                cartController.addProductToCart(product);
+                                return !p0;
                               },
+                              isLikedCart: cartController.isInCart(product),
                               addToFavOnTap: (p0) async {
                                 controller.manageFavorites(productId);
                                 return !p0;
@@ -169,7 +180,12 @@ class CustomGrid extends StatelessWidget {
                 () => ItemCard(
                   heroTag: 'product_${con.id}',
                   onTap: () {
-                    Get.to(() => ProductDetailsScreen(productModel: con));
+                    Get.to(
+                      () => ProductDetailsScreen(
+                        productModel: con,
+                        heroTag: 'product_${con.id}',
+                      ),
+                    );
                   },
                   isLikedForCart: cartcart.isInCart(con),
                   addToChartOnTap: (p0) async {

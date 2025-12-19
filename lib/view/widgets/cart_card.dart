@@ -19,6 +19,9 @@ class CartListOfCard extends StatelessWidget {
         return FadeInLeftBig(
           from: index == 0 ? 25 : index * 50,
           child: ListItemCard(
+            heroTag: "product_$index",
+            isLikedCart: true,
+            onTap: () {},
             addToCartOnTap: (p0) async {
               return !p0;
             },
