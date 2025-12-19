@@ -98,10 +98,10 @@ class CheckOutScreen extends StatelessWidget {
                   from: 10,
                   child: CreditCardForm(
                     formKey: _formKey,
-                    cardNumber: checkOutController.cardNumber,
-                    expiryDate: checkOutController.expiryDate,
-                    cardHolderName: checkOutController.cardHolderName,
-                    cvvCode: checkOutController.cvvCode,
+                    cardNumber: checkOutController.cardNumber.text,
+                    expiryDate: checkOutController.expiryDate.text,
+                    cardHolderName: checkOutController.cardHolderName.text,
+                    cvvCode: checkOutController.cvvCode.text,
                     onCreditCardModelChange:
                         checkOutController.onCreditCardModelChange,
                     inputConfiguration: InputConfiguration(
@@ -200,6 +200,7 @@ class CheckOutScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 25),
               ],
             ),
           ),
@@ -273,10 +274,10 @@ class CustomCreditCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CreditCardWidget(
-      cardNumber: checkOutController.cardNumber,
-      expiryDate: checkOutController.expiryDate,
-      cardHolderName: checkOutController.cardHolderName,
-      cvvCode: checkOutController.cvvCode,
+      cardNumber: checkOutController.cardNumber.text,
+      expiryDate: checkOutController.expiryDate.text,
+      cardHolderName: checkOutController.cardHolderName.text,
+      cvvCode: checkOutController.cvvCode.text,
       showBackView: checkOutController.isCvvFocused,
       onCreditCardWidgetChange: (CreditCardBrand brand) {},
       bankName: 'Jordan islamic bank',

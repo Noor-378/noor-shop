@@ -58,6 +58,7 @@ class CartController extends GetxController {
 
   void clearAllProducts() {
     productMap.clear();
+    storage.remove("cartList");
     update();
   }
 
