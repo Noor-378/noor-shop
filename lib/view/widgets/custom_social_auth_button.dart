@@ -21,11 +21,9 @@ class CustomSocialAuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        shadowColor: Colors.black26,
         side: BorderSide(
-          color:
-              Get.isDarkMode
-                  ? secondColor
-                  : Colors.grey.shade300,
+          color: Get.isDarkMode ? secondColor : Colors.grey.shade300,
         ),
         overlayColor: mainColor,
         fixedSize: const Size(70, 40),
@@ -33,9 +31,7 @@ class CustomSocialAuthButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         backgroundColor:
-            Get.isDarkMode
-                ? secondColor.withAlpha(100)
-                : Colors.white,
+            Get.isDarkMode ? secondColor.withAlpha(100) : Colors.white,
 
         elevation: 15,
       ),

@@ -11,6 +11,7 @@ class ProductController extends GetxController
     with GetTickerProviderStateMixin {
   late TabController tabController;
   final searchController = TextEditingController();
+  var isSearching = false.obs;
 
   @override
   void onInit() {
@@ -20,6 +21,11 @@ class ProductController extends GetxController
     searchController.addListener(() {
       final query = searchController.text;
       searchLogic(query);
+      if (query.isNotEmpty) {
+        isSearching.value = true;
+      } else {
+        isSearching.value = false;
+      }
     });
 
     super.onInit();

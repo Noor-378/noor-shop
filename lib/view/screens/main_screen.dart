@@ -50,7 +50,6 @@ class MainScreen extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  // Decorative circles
                   Positioned(
                     top: -100,
                     right: -100,
